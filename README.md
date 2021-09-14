@@ -22,8 +22,6 @@
 
 ## To Crunch(Separately for in hand and in deck)
 	
-	Names of columns to import, rather than importing all and dropping
-	
 	Number of lands
 	
 	Number of one through eight drop creatures and noncreatures
