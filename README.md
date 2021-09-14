@@ -4,10 +4,6 @@
 
 	Player win rate
 
-	Player rank
-
-	Opponent rank
-
 	Play/draw
 
 	Player mulligans
@@ -17,8 +13,6 @@
 	Number of each card in deck
 	
 	Number of each card in sideboard
-	
-	Rank differential between players
 
 ## To Crunch(Separately for in hand and in deck)
 	
