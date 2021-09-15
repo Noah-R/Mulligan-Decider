@@ -9,14 +9,10 @@
 	Player mulligans
 	
 	Number of each card in opening hand
-	
-	Number of each card in deck
-	
-	Number of each card in sideboard
 
-## To Crunch(Separately for in hand and in deck)
-	
 	Number of lands
+
+## Crunchable Features
 	
 	Number of one through eight drop creatures and noncreatures
 	
@@ -27,6 +23,14 @@
 	Number of sources of each color
 	
 	Has turn one through turn four play, with mana to cast
+
+	Is missing colors for spells in hand
+
+	Taplands/colors
+	
+	Interaction terms between cards
+	
+	Opponent mulligans
 
 ## Models
 	
@@ -39,14 +43,6 @@
 		Logistic regression without cards in opening hand features, possibly trained on only examples with an additional mulligan or more
 	
 	Neural Network
-
-## Room for Expansion
-	
-	Taplands/colors
-	
-	Interaction terms between cards
-	
-	Opponent mulligans
 
 ## Investigate
 	
