@@ -1,5 +1,9 @@
+import numpy as np
 import pandas as pd
+import tensorflow as tf
+from tensorflow.keras import layers
 import json
+from matplotlib import pyplot as plt
 
 def readSet(setname):
     #Download the individual set file from MTGJSON, call passing filename, returns a dictionary of card names mapped to card data dictionaries
@@ -67,7 +71,7 @@ def rankToNumber(rank):
 
 def preprocess(filename):
     #read in data
-    d = pd.read_csv(filename, header=0, usecols=range(0, 360))
+    d = pd.read_csv(filename, header=0, usecols=range(0, 360), skipfooter=1)
 
     #read in sets
     sta = readSet("STA.json")
@@ -78,15 +82,57 @@ def preprocess(filename):
     d = d.drop(dropcols, axis=1)
 
     d["lands"] = d.apply(lambda row: countCards(row, getCards([sta, stx], "type", "Land")), axis=1)
+    d["on_play"] = d["on_play"].apply(lambda x: int(x))
+    d["won"] = d["won"].apply(lambda x: int(x))
 
     return d
 
-def marginal_preprocess():
-    d = pd.read_csv("preprocessed_data.csv", header=0)
-    columns = getAllCardColumns(d)
-    d["Full Hand"] = d.apply(lambda row: rowToHand(row, columns), axis=1)
-    return d
+def describe(path):
+    pd.read_csv(path, header=0).describe().to_csv("describe.csv")
+
 
 #data = preprocess("game_data_public.STX.PremierDraft.csv")
 #data.to_csv("preprocessed_data.csv")
-marginal_preprocess().to_csv("preprocessed_data.csv")
+
+data = pd.read_csv("preprocessed_data.csv", header=0, skipfooter=1)
+
+#delete this once the unnnamed column and blank last row are gone from preprocessed data
+print("starting")
+data = data.drop("Unnamed: 0", axis=1)
+data.to_csv("preprocessed_data.csv")
+print("success at this stage")
+#also delete skipfooter from read_csv call
+
+target="won"
+learningrate=.001
+batchSize=10
+epochs=50
+
+features=[]
+
+for col in data.keys():
+    if(col!=target):
+        features.append(tf.feature_column.numeric_column(col))
+
+model = tf.keras.models.Sequential(
+    layers.DenseFeatures(features),
+    layers.Dense(units=1, input_shape=(1,) , activation=tf.sigmoid)
+)
+
+model.compile(
+    optimizer=tf.keras.optimizers.RMSprop(learning_rate=learningrate),
+    loss=tf.keras.losses.BinaryCrossentropy(),
+    metrics=["mae"]#tf.keras.metrics.MeanAbsoluteError(name='mean_absolute_error', dtype=None)
+)
+
+features = {name: np.array(value) for name, value in data.items()}
+label = np.array(features.pop(target)) 
+
+model.fit(
+    x=features,
+    y=label,
+    batch_size=batchSize,
+    epochs=epochs,
+    shuffle=True,
+    verbose=2
+)
