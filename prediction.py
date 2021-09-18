@@ -69,9 +69,16 @@ def rankToNumber(rank):
         num+=1
     return num
 
+def softenColumnNames(data):
+    columns=[]
+    for name in data.keys():
+        columns.append(name.replace(" ", "_").replace(",", "").replace("'", ""))
+    data.columns=columns
+    return data
+
 def preprocess(filename):
     #read in data
-    d = pd.read_csv(filename, header=0, usecols=range(0, 360), skipfooter=1)
+    d = pd.read_csv(filename, header=0, usecols=range(0, 360))
 
     #read in sets
     sta = readSet("STA.json")
@@ -80,10 +87,16 @@ def preprocess(filename):
     #drop extraneous columns
     dropcols=["user_n_games_bucket", "draft_id", "build_index", "draft_time", "expansion", "event_type", "game_number", "opp_colors", "num_turns", "opp_num_mulligans", "rank", "opp_rank"]
     d = d.drop(dropcols, axis=1)
-
-    d["lands"] = d.apply(lambda row: countCards(row, getCards([sta, stx], "type", "Land")), axis=1)
+    
+    #convert boolean columns to int
     d["on_play"] = d["on_play"].apply(lambda x: int(x))
     d["won"] = d["won"].apply(lambda x: int(x))
+
+    #crunch land total
+    d["lands"] = d.apply(lambda row: countCards(row, getCards([sta, stx], "type", "Land")), axis=1)
+
+    #remove _ ' , from column names, can only do this after all MTGJSON work is done
+    #d = softenColumnNames(d)
 
     return d
 
@@ -94,18 +107,15 @@ def describe(path):
 #data = preprocess("game_data_public.STX.PremierDraft.csv")
 #data.to_csv("preprocessed_data.csv")
 
-data = pd.read_csv("preprocessed_data.csv", header=0, skipfooter=1)
+data = pd.read_csv("preprocessed_data.csv", header=0).drop("Unnamed: 0", axis=1)
 
-#delete this once the unnnamed column and blank last row are gone from preprocessed data
-print("starting")
-data = data.drop("Unnamed: 0", axis=1)
-data.to_csv("preprocessed_data.csv")
-print("success at this stage")
-#also delete skipfooter from read_csv call
+#temporarily done on-the-fly, save this to the preprocessed data file in the future
+data = softenColumnNames(data)
+#end
 
 target="won"
 learningrate=.001
-batchSize=10
+batchsize=10
 epochs=50
 
 features=[]
@@ -114,10 +124,10 @@ for col in data.keys():
     if(col!=target):
         features.append(tf.feature_column.numeric_column(col))
 
-model = tf.keras.models.Sequential(
+model = tf.keras.models.Sequential([
     layers.DenseFeatures(features),
     layers.Dense(units=1, input_shape=(1,) , activation=tf.sigmoid)
-)
+])
 
 model.compile(
     optimizer=tf.keras.optimizers.RMSprop(learning_rate=learningrate),
@@ -131,8 +141,12 @@ label = np.array(features.pop(target))
 model.fit(
     x=features,
     y=label,
-    batch_size=batchSize,
+    batch_size=batchsize,
     epochs=epochs,
     shuffle=True,
     verbose=2
 )
+
+"""
+WARNING:tensorflow:Layers in a Sequential model should only have a single input tensor, but we receive a <class 'dict'>... Consider rewriting this model with the Functional API.
+"""
