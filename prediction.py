@@ -107,7 +107,7 @@ def describe(path):
 #data = preprocess("game_data_public.STX.PremierDraft.csv")
 #data.to_csv("preprocessed_data.csv")
 
-data = pd.read_csv("preprocessed_data.csv", header=0).drop("Unnamed: 0", axis=1)
+data = pd.read_csv("preprocessed_data.csv", usecols=[0, 1, 2, 3, 4, 349], header=0).drop("Unnamed: 0", axis=1)#delete usecols to include individual card counts, but it'll take you forever
 
 #temporarily done on-the-fly, save this to the preprocessed data file in the future
 data = softenColumnNames(data)
@@ -132,7 +132,7 @@ model = tf.keras.models.Sequential([
 model.compile(
     optimizer=tf.keras.optimizers.RMSprop(learning_rate=learningrate),
     loss=tf.keras.losses.BinaryCrossentropy(),
-    metrics=["mae"]#tf.keras.metrics.MeanAbsoluteError(name='mean_absolute_error', dtype=None)
+    metrics=["mae"]
 )
 
 features = {name: np.array(value) for name, value in data.items()}
