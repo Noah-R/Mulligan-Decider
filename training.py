@@ -9,8 +9,9 @@ data.to_csv("preprocessed_data.csv")
 
 target="won"
 learningrate=.01
-batchsize=10
-epochs=25
+batchsize=32
+epochs=256
+date="20_sep_2021_2"
 
 features=[]
 
@@ -32,6 +33,8 @@ model.compile(
 features = {name: np.array(value) for name, value in data.items()}
 label = np.array(features.pop(target)) 
 
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir="tb_"+date, histogram_freq=1)
+
 model.fit(
     x = features,
     y = label,
@@ -39,10 +42,11 @@ model.fit(
     epochs = epochs,
     shuffle = True,
     verbose = 2,
-    validation_split = 0.1
+    validation_split = 0.1, 
+    callbacks=[tensorboard_callback]
 )
 
-model.save("model_9_19_2021")
+model.save("model_"+date)
 
 
 #WARNING:tensorflow:Layers in a Sequential model should only have a single input tensor, but we receive a <class 'dict'>... Consider rewriting this model with the Functional API.
