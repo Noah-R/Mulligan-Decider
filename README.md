@@ -2,19 +2,19 @@
 
 ## Current Model
 
-	Player win rate
-
 	Play/draw
 
 	Player mulligans
-	
-	Number of each card in opening hand
 
 	Number of lands
 
-## Crunchable Features
+	Number of one through eight mana spells
+
+## Addable Features
+
+	Number of each card in opening hand
 	
-	Number of one through eight drop creatures and noncreatures
+	Number of creatures/noncreatures
 	
 	Number of spells of each color
 	
@@ -31,6 +31,8 @@
 	Interaction terms between cards
 	
 	Opponent mulligans
+
+	User win rate
 
 ## Models
 	
