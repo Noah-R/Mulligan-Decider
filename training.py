@@ -11,7 +11,7 @@ target="won"
 learningrate=.01
 batchsize=32
 epochs=256
-date="20_sep_2021_2"
+date="21_sep_2021_1"
 
 features=[]
 
@@ -27,7 +27,7 @@ model = tf.keras.models.Sequential([
 model.compile(
     optimizer=tf.keras.optimizers.RMSprop(learning_rate=learningrate),
     loss=tf.keras.losses.BinaryCrossentropy(),
-    metrics=["mse", "mae"]
+    metrics=["mse"]
 )
 
 features = {name: np.array(value) for name, value in data.items()}
