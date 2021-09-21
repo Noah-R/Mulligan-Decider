@@ -12,6 +12,12 @@
 
 ## Addable Features
 
+	Distance from mean number of lands
+
+	Remove fives through eights
+
+	---
+
 	Number of each card in opening hand
 	
 	Number of creatures/noncreatures
