@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 model = tf.keras.models.load_model('model_20_sep_2021_2')
 data = pd.read_csv("preprocessed_data.csv", header=0, usecols=range(1, 13))
-examples = data.iloc[:100000]
+examples = data.iloc[:100000]#test on last 10% of data
 
 features = {name: np.array(value) for name, value in examples.items()}
 label = np.array(features.pop("won"))

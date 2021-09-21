@@ -27,7 +27,7 @@ model = tf.keras.models.Sequential([
 model.compile(
     optimizer=tf.keras.optimizers.RMSprop(learning_rate=learningrate),
     loss=tf.keras.losses.BinaryCrossentropy(),
-    metrics=["mae"]
+    metrics=["mse", "mae"]
 )
 
 features = {name: np.array(value) for name, value in data.items()}
@@ -40,7 +40,7 @@ model.fit(
     y = label,
     batch_size = batchsize,
     epochs = epochs,
-    shuffle = True,
+    shuffle = False,
     verbose = 2,
     validation_split = 0.1, 
     callbacks=[tensorboard_callback]

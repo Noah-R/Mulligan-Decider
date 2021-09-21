@@ -4,19 +4,13 @@
 
 	Play/draw
 
-	Player mulligans
+	Number of cards in hand
 
-	Number of lands
+	Whether the hand is a two, three, four, or five lander
 
-	Number of one through eight mana spells
+	Number of one, two, three, and four mana spells
 
 ## Addable Features
-
-	Distance from mean number of lands
-
-	Remove fives through eights
-
-	---
 
 	Number of each card in opening hand
 	

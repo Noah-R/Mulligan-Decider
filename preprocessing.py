@@ -83,12 +83,8 @@ def preprocess(filename):
     #drop extraneous columns
     dropcols=["user_win_rate_bucket", "user_n_games_bucket", "draft_id", "build_index", "draft_time", "expansion", "event_type", "game_number", "opp_colors", "num_turns", "opp_num_mulligans", "rank", "opp_rank"]
     d = d.drop(dropcols, axis=1)
-    
-    #convert boolean columns to int
-    d["on_play"] = d["on_play"].apply(lambda x: int(x))
-    d["won"] = d["won"].apply(lambda x: int(x))
 
-    #crunch card type totals, this can be cleaned up into functions once it works
+    #crunch card type totals, this can probably be cleaned up into functions
     cards=getColumns([sta, stx], "\"Land\" in cardSet[card][\"type\"]")
     d["lands"] = d.loc[:, cards].sum(axis=1)
     cards=getColumns([sta, stx], "cardSet[card][\"convertedManaCost\"] == 1")
@@ -99,14 +95,21 @@ def preprocess(filename):
     d["threes"] = d.loc[:, cards].sum(axis=1)
     cards=getColumns([sta, stx], "cardSet[card][\"convertedManaCost\"] == 4")
     d["fours"] = d.loc[:, cards].sum(axis=1)
-    cards=getColumns([sta, stx], "cardSet[card][\"convertedManaCost\"] == 5")
-    d["fives"] = d.loc[:, cards].sum(axis=1)
-    cards=getColumns([sta, stx], "cardSet[card][\"convertedManaCost\"] == 6")
-    d["sixes"] = d.loc[:, cards].sum(axis=1)
-    cards=getColumns([sta, stx], "cardSet[card][\"convertedManaCost\"] == 7")
-    d["sevens"] = d.loc[:, cards].sum(axis=1)
-    cards=getColumns([sta, stx], "cardSet[card][\"convertedManaCost\"] == 8")
-    d["eights"] = d.loc[:, cards].sum(axis=1)
+
+    #one-hot encode land count
+    d["two_lander"] = d["lands"].apply(lambda x:int(x == 2))
+    d["three_lander"] = d["lands"].apply(lambda x:int(x == 3))
+    d["four_lander"] = d["lands"].apply(lambda x:int(x == 4))
+    d["five_lander"] = d["lands"].apply(lambda x:int(x == 5))
+    d = d.drop("lands", axis=1)
+
+    #convert num_mulligans to total cards
+    d["cards"] = 7-d["num_mulligans"]
+    d = d.drop("num_mulligans", axis=1)
+
+    #convert boolean columns to int
+    d["on_play"] = d["on_play"].apply(lambda x: int(x))
+    d["won"] = d["won"].apply(lambda x: int(x))
 
     #drop all individual card columns, not going to use them for now, uncomment softenColumnNames when removing this
     d = d.drop(getAllCardColumns(d), axis=1)
@@ -118,3 +121,5 @@ def preprocess(filename):
     d = d.reindex(np.random.permutation(d.index))
 
     return d
+
+describe("preprocessed_data.csv")
