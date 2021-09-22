@@ -12,6 +12,8 @@
 
 ## Addable Features
 
+	Make separate files for training data/test data
+
 	Number of each card in opening hand
 	
 	Number of creatures/noncreatures
