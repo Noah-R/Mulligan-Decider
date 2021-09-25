@@ -4,7 +4,7 @@ import tensorflow as tf
 from tensorflow.keras import layers
 from preprocessing import neuralPreprocess, trainTestSplit
 
-trainingdata, testdata = trainTestSplit(neuralPreprocess("game_data_public.STX.PremierDraft.csv"))
+trainingdata, testdata = trainTestSplit(neuralPreprocess("game_data_public.STX.PremierDraft.csv"), .1)
 trainingdata.to_csv("training_data.csv")
 testdata.to_csv("test_data.csv")
 

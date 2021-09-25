@@ -70,7 +70,9 @@ def softenColumnNames(data):
     return data
 
 def trainTestSplit(d, split):
-    splitpoint=len(d)*(1-split)
+    if(split>1 or split<0 or type(d) != pd.DataFrame):
+        return None
+    splitpoint=int(len(d)*(1-split))
     return d[:splitpoint], d[splitpoint:]
 
 def describe(path):
@@ -153,5 +155,3 @@ def neuralPreprocess(filename):
     d = d.reindex(np.random.permutation(d.index))
 
     return d
-
-describe("preprocessed_data.csv")

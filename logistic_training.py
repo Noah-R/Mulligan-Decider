@@ -4,7 +4,7 @@ import tensorflow as tf
 from tensorflow.keras import layers
 from preprocessing import logisticPreprocess, trainTestSplit
 
-trainingdata, testdata = trainTestSplit(logisticPreprocess("game_data_public.STX.PremierDraft.csv"))
+trainingdata, testdata = trainTestSplit(logisticPreprocess("game_data_public.STX.PremierDraft.csv"), .1)
 trainingdata.to_csv("training_data.csv")
 testdata.to_csv("test_data.csv")
 
@@ -12,7 +12,7 @@ target="won"
 learningrate=.01
 batchsize=32
 epochs=256
-date="21_sep_2021_1"
+date="25_sep_2021_1"
 
 features=[]
 
