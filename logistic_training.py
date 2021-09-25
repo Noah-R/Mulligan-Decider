@@ -2,9 +2,9 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 from tensorflow.keras import layers
-from preprocessing import preprocess
+from preprocessing import logisticPreprocess
 
-data = preprocess("game_data_public.STX.PremierDraft.csv")
+data = logisticPreprocess("game_data_public.STX.PremierDraft.csv")
 data.to_csv("preprocessed_data.csv")
 
 target="won"

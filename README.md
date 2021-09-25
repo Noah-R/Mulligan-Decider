@@ -1,6 +1,12 @@
 # Mulligan-Decider
 
-## Current Model
+##To do next
+
+	Make separate files for training data/test data, reconfigure code to use
+
+	Write out neural_training
+
+## Current Logistic Regression Model
 
 	Play/draw
 
@@ -11,8 +17,6 @@
 	Number of one, two, three, and four mana spells
 
 ## Addable Features
-
-	Make separate files for training data/test data
 
 	Number of each card in opening hand
 	

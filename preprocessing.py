@@ -72,7 +72,7 @@ def softenColumnNames(data):
 def describe(path):
     pd.read_csv(path, header=0).describe().to_csv("describe.csv")
 
-def preprocess(filename):
+def logisticPreprocess(filename):
     #read in data
     d = pd.read_csv(filename, header=0, usecols=range(0, 359), index_col=False)
 
@@ -116,6 +116,34 @@ def preprocess(filename):
 
     #remove _ ' , from column names, can only do this after all MTGJSON work is done
     #d = softenColumnNames(d)
+
+    #shuffle
+    d = d.reindex(np.random.permutation(d.index))
+
+    return d
+
+def neuralPreprocess(filename):
+    #read in data
+    d = pd.read_csv(filename, header=0, usecols=range(0, 359), index_col=False)
+
+    #read in sets
+    sta = readSet("STA.json")
+    stx = readSet("STX.json")
+
+    #drop extraneous columns
+    dropcols=["user_win_rate_bucket", "user_n_games_bucket", "draft_id", "build_index", "draft_time", "expansion", "event_type", "game_number", "opp_colors", "num_turns", "opp_num_mulligans", "rank", "opp_rank"]
+    d = d.drop(dropcols, axis=1)
+
+    #convert num_mulligans to total cards
+    d["cards"] = 7-d["num_mulligans"]
+    d = d.drop("num_mulligans", axis=1)
+
+    #convert boolean columns to int
+    d["on_play"] = d["on_play"].apply(lambda x: int(x))
+    d["won"] = d["won"].apply(lambda x: int(x))
+
+    #remove _ ' , from column names
+    d = softenColumnNames(d)
 
     #shuffle
     d = d.reindex(np.random.permutation(d.index))
