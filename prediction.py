@@ -16,7 +16,7 @@ def plotCalibrationCurve(preds, label):
     plt.plot([0, 1], [0, 1])
     plt.show()
 
-def getWeights(model):#I think the weights are ordered by alphabetized feature names, but I'm not fully certain of that, so this could be wrong. Only works for the logistic regression model, with features on layer 0 and output on layer 1.
+def getWeights(model):#Only works for the logistic regression model, with features on layer 0 and output on layer 1.
     cols=model.layers[0].get_config()["feature_columns"]
     weights=model.layers[1].get_weights()[0]
     bias=model.layers[1].get_weights()[1]
