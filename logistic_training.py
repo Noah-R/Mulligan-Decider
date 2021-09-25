@@ -2,10 +2,11 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 from tensorflow.keras import layers
-from preprocessing import logisticPreprocess
+from preprocessing import logisticPreprocess, trainTestSplit
 
-data = logisticPreprocess("game_data_public.STX.PremierDraft.csv")
-data.to_csv("preprocessed_data.csv")
+trainingdata, testdata = trainTestSplit(logisticPreprocess("game_data_public.STX.PremierDraft.csv"))
+trainingdata.to_csv("training_data.csv")
+testdata.to_csv("test_data.csv")
 
 target="won"
 learningrate=.01
@@ -15,7 +16,7 @@ date="21_sep_2021_1"
 
 features=[]
 
-for col in data.keys():
+for col in trainingdata.keys():
     if(col!=target):
         features.append(tf.feature_column.numeric_column(col))
 
@@ -30,8 +31,11 @@ model.compile(
     metrics=["mse"]
 )
 
-features = {name: np.array(value) for name, value in data.items()}
-label = np.array(features.pop(target)) 
+features = {name: np.array(value) for name, value in trainingdata.items()}
+label = np.array(features.pop(target))
+
+testfeatures = {name: np.array(value) for name, value in testdata.items()}
+testlabel = np.array(testfeatures.pop(target))
 
 tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir="tb_"+date, histogram_freq=1)
 
@@ -42,7 +46,7 @@ model.fit(
     epochs = epochs,
     shuffle = False,
     verbose = 2,
-    validation_split = 0.1, 
+    validation_data = (testfeatures, testlabel), 
     callbacks=[tensorboard_callback]
 )
 

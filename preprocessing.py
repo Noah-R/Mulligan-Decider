@@ -69,6 +69,10 @@ def softenColumnNames(data):
     data.columns=columns
     return data
 
+def trainTestSplit(d, split):
+    splitpoint=len(d)*(1-split)
+    return d[:splitpoint], d[splitpoint:]
+
 def describe(path):
     pd.read_csv(path, header=0).describe().to_csv("describe.csv")
 

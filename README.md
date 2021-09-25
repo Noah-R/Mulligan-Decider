@@ -1,11 +1,5 @@
 # Mulligan-Decider
 
-##To do next
-
-	Make separate files for training data/test data, reconfigure code to use
-
-	Write out neural_training
-
 ## Current Logistic Regression Model
 
 	Play/draw
