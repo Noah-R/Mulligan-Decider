@@ -144,9 +144,12 @@ def neuralPreprocess(filename):
     d["cards"] = 7-d["num_mulligans"]
     d = d.drop("num_mulligans", axis=1)
 
-    #convert boolean columns to int
-    d["on_play"] = d["on_play"].apply(lambda x: int(x))
-    d["won"] = d["won"].apply(lambda x: int(x))
+    #convert boolean columns to int, multiply by 7 so I can divide the whole dataframe by 7 later
+    d["on_play"] = d["on_play"].apply(lambda x: int(x)*7)
+    d["won"] = d["won"].apply(lambda x: int(x)*7)
+
+    #divide the whole dataframe by 7, to normalize number of each card to other features
+    d = d/7
 
     #remove _ ' , from column names
     d = softenColumnNames(d)

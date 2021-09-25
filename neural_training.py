@@ -10,9 +10,9 @@ testdata.to_csv("test_data.csv")
 
 target="won"
 learningrate=.01
-batchsize=32
-epochs=256
-date="21_sep_2021_1"
+batchsize=256
+epochs=50
+date="25_sep_2021_2"
 
 features=[]
 
@@ -22,7 +22,9 @@ for col in trainingdata.keys():
 
 model = tf.keras.models.Sequential([
     layers.DenseFeatures(features),
-    layers.Dense(units=1, input_shape=(1,) , activation=tf.sigmoid)
+    tf.keras.layers.Dense(units=32, activation='relu', name='Hidden1'),
+    tf.keras.layers.Dense(units=16, activation='relu', name='Hidden2'),
+    layers.Dense(units=1, activation=tf.sigmoid, name="Output")
 ])
 
 model.compile(
