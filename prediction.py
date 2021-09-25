@@ -24,17 +24,19 @@ def getWeights(model):#Only works for the logistic regression model, with featur
         print(str(cols[index]["config"]["key"])+": "+str(weights[index]))
     print("Bias: "+str(bias))
 
-model = tf.keras.models.load_model('archives/model_21_sep_2021_1')
+model = tf.keras.models.load_model('model_25_sep_2021_2')
 data = pd.read_csv("test_data.csv", header=0)
 data = data.drop(index=0, axis=1)
 
 features = {name: np.array(value) for name, value in data.items()}
 label = np.array(features.pop("won"))
-preds = model.predict(x=features, verbose=1)
 
+preds = model.predict(x=features, verbose=1)
+model.evaluate(x=features, y=label, verbose=1)
 showExamples(5, data, preds, label)
 plotCalibrationCurve(preds, label)
-getWeights(model)
+
+#getWeights(model)
 
 """
 cd desktop/mulligan-decider
