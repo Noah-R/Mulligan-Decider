@@ -11,9 +11,10 @@ print("preprocessing done")
 
 target="won"
 learningrate=.01
-batchsize=256
-epochs=50
-date="25_sep_2021_2"
+batchsize=512
+epochs=100
+l2rate=.01
+date="26_sep_2021_1"
 
 features=[]
 
@@ -23,8 +24,9 @@ for col in trainingdata.keys():
 
 model = tf.keras.models.Sequential([
     layers.DenseFeatures(features),
-    tf.keras.layers.Dense(units=32, activation='relu', name='Hidden1'),
-    tf.keras.layers.Dense(units=16, activation='relu', name='Hidden2'),
+    tf.keras.layers.Dense(units=128, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(l=l2rate), name='Hidden1'),
+    tf.keras.layers.Dense(units=128, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(l=l2rate), name='Hidden2'),
+    tf.keras.layers.Dense(units=128, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(l=l2rate), name='Hidden3'),
     layers.Dense(units=1, activation=tf.sigmoid, name="Output")
 ])
 

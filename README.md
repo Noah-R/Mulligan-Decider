@@ -1,5 +1,13 @@
 # Mulligan-Decider
 
+## Current Neural Network Model
+
+	Play/draw
+
+	Number of cards in hand, divided by 7
+
+	Number of each individual card in hand, divided by 7
+
 ## Current Logistic Regression Model
 
 	Play/draw
@@ -10,7 +18,7 @@
 
 	Number of one, two, three, and four mana spells
 
-## Addable Features
+## Addable Features to Logistic Regression Model
 
 	Number of each card in opening hand
 	
@@ -33,21 +41,5 @@
 	Opponent mulligans
 
 	User win rate
-
-## Models
-	
-	Chance of winning if keep
-	
-		Logistic regression with all features
-	
-	Chance of winning if mulligan
-	
-		Logistic regression without cards in opening hand features, possibly trained on only examples with an additional mulligan or more
-	
-	Neural Network
-
-## Investigate
-	
-	How does it denote draws?
 
 Data and license are available at https://www.17lands.com/public_datasets
