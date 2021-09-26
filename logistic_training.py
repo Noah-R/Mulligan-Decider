@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-from tensorflow.keras import layers
 from preprocessing import logisticPreprocess, trainTestSplit
 
 trainingdata, testdata = trainTestSplit(logisticPreprocess("game_data_public.STX.PremierDraft.csv"), .1)
@@ -21,8 +20,8 @@ for col in trainingdata.keys():
         features.append(tf.feature_column.numeric_column(col))
 
 model = tf.keras.models.Sequential([
-    layers.DenseFeatures(features),
-    layers.Dense(units=1, input_shape=(1,) , activation=tf.sigmoid)
+    tf.keras.layers.DenseFeatures(features),
+    tf.keras.layers.Dense(units=1, input_shape=(1,) , activation=tf.sigmoid)
 ])
 
 model.compile(
