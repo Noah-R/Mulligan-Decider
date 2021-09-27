@@ -132,10 +132,6 @@ def neuralPreprocess(filename):
     #read in data
     d = pd.read_csv(filename, header=0, usecols=range(0, 359), index_col=False)
 
-    #read in sets
-    sta = readSet("STA.json")
-    stx = readSet("STX.json")
-
     #drop extraneous columns
     dropcols=["user_win_rate_bucket", "user_n_games_bucket", "draft_id", "build_index", "draft_time", "expansion", "event_type", "game_number", "opp_colors", "num_turns", "opp_num_mulligans", "rank", "opp_rank"]
     d = d.drop(dropcols, axis=1)

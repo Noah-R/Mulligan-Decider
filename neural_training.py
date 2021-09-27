@@ -9,12 +9,13 @@ testdata.to_csv("test_data.csv")
 print("preprocessing done")
 
 target="won"
-learningrate=.01
-batchsize=512
+learningrate=.001
+batchsize=1024
 epochs=100
 l2rate=.000
 dropoutrate=0.1
-date="26_sep_2021_1"
+earlyStoppingPatience=10
+date="26_sep_2021_3"
 
 features=[]
 
@@ -44,7 +45,8 @@ label = np.array(features.pop(target))
 testfeatures = {name: np.array(value) for name, value in testdata.items()}
 testlabel = np.array(testfeatures.pop(target))
 
-tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir="tb_"+date, histogram_freq=1)
+tensorboardCallback = tf.keras.callbacks.TensorBoard(log_dir="tb_"+date, histogram_freq=1)
+earlyStoppingCallback = tf.keras.callbacks.EarlyStopping(patience=earlyStoppingPatience, verbose=1, restore_best_weights=True)
 
 model.fit(
     x = features,
@@ -54,7 +56,7 @@ model.fit(
     shuffle = False,
     verbose = 2,
     validation_data = (testfeatures, testlabel), 
-    callbacks=[tensorboard_callback]
+    callbacks=[tensorboardCallback, earlyStoppingCallback]
 )
 
 model.save("model_"+date)
