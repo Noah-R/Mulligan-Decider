@@ -7,7 +7,12 @@ import matplotlib.pyplot as plt
 
 def showExamples(num, data, preds, label):
     for i in range(num):
-        print(data.iloc[i, :])
+        d = data.iloc[i, :]
+        #testing this
+        d["on_play"] = d["on_play"]/7
+        d["won"] = d["won"]/7
+        d = d[d>0]*7
+        print(d)
         print("Predicted "+str(preds[i])+", result was "+str(label[i]))
 
 def plotCalibrationCurve(preds, label):
@@ -24,7 +29,7 @@ def getWeights(model):#Only works for the logistic regression model, with featur
         print(str(cols[index]["config"]["key"])+": "+str(weights[index]))
     print("Bias: "+str(bias))
 
-model = tf.keras.models.load_model('model_25_sep_2021_2')
+model = tf.keras.models.load_model('model_26_sep_2021_1')
 data = pd.read_csv("test_data.csv", header=0)
 data = data.drop(index=0, axis=1)
 
@@ -32,9 +37,9 @@ features = {name: np.array(value) for name, value in data.items()}
 label = np.array(features.pop("won"))
 
 preds = model.predict(x=features, verbose=1)
-model.evaluate(x=features, y=label, verbose=1)
-showExamples(5, data, preds, label)
-plotCalibrationCurve(preds, label)
+showExamples(20, data, preds, label)
+#plotCalibrationCurve(preds, label)
+#model.evaluate(x=features, y=label, verbose=1)
 
 #getWeights(model)
 
