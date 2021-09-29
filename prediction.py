@@ -21,6 +21,14 @@ def plotCalibrationCurve(preds, label):
     plt.plot([0, 1], [0, 1])
     plt.show()
 
+def getAccuracy(preds, label, threshold=.5):
+    correct=0
+    for i in range(len(preds)):
+        if(int(preds[i]>threshold)==label[i]):
+            correct+=1
+    print("Accuracy is "+str(correct/len(preds)))
+
+
 def getWeights(model):#Only works for the logistic regression model, with features on layer 0 and output on layer 1.
     cols=model.layers[0].get_config()["feature_columns"]
     weights=model.layers[1].get_weights()[0]
@@ -39,6 +47,7 @@ label = np.array(features.pop("won"))
 preds = model.predict(x=features, verbose=1)
 showExamples(20, data, preds, label)
 plotCalibrationCurve(preds, label)
+getAccuracy(preds, label)
 #model.evaluate(x=features, y=label, verbose=1)
 
 data = pd.read_csv("training_data.csv", header=0)
