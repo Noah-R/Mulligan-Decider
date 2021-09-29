@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-from preprocessing import neuralPreprocess, trainTestSplit
+from preprocessing import neuralPreprocess, trainTestSplit, getMulliganWinRates
 
 trainingdata, testdata = trainTestSplit(neuralPreprocess("game_data_public.STX.PremierDraft.csv"), .1)
 trainingdata.to_csv("training_data.csv")
@@ -12,10 +12,10 @@ target="won"
 learningrate=.001
 batchsize=1024
 epochs=100
-l2rate=.000
+l2rate=.0001
 dropoutrate=0.1
 earlyStoppingPatience=10
-date="26_sep_2021_3"
+date="29_sep_2021_1"
 
 features=[]
 
@@ -23,12 +23,11 @@ for col in trainingdata.keys():
     if(col!=target):
         features.append(tf.feature_column.numeric_column(col))
 
-#add kernel_regularizer=tf.keras.regularizers.l2(l=l2rate) to each dense layer
 model = tf.keras.models.Sequential([
     tf.keras.layers.DenseFeatures(features),
-    tf.keras.layers.Dense(units=128, activation='relu', name='Hidden1'),
+    tf.keras.layers.Dense(units=128, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(l=l2rate), name='Hidden1'),
     tf.keras.layers.Dropout(rate=dropoutrate),
-    tf.keras.layers.Dense(units=128, activation='relu', name='Hidden2'),
+    tf.keras.layers.Dense(units=128, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(l=l2rate), name='Hidden2'),
     tf.keras.layers.Dropout(rate=dropoutrate),
     tf.keras.layers.Dense(units=1, activation=tf.sigmoid, name="Output")
 ])
@@ -60,6 +59,6 @@ model.fit(
 )
 
 model.save("model_"+date)
-
+getMulliganWinRates(trainingdata, 1)
 
 #WARNING:tensorflow:Layers in a Sequential model should only have a single input tensor, but we receive a <class 'dict'>... Consider rewriting this model with the Functional API.

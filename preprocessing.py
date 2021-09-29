@@ -75,6 +75,24 @@ def trainTestSplit(d, split):
     splitpoint=int(len(d)*(1-split))
     return d[:splitpoint], d[splitpoint:]
 
+def getMulliganWinRates(d, maxcards):#maxcards is the "cards" value for a 7 card hand, 1 after neural preprocessing, 7 after logistic preprocessing
+    play = d[d["on_play"]==1.0]
+    draw = d[d["on_play"]==0.0]
+    print("Overall win rate on the play is "+str(play["won"].mean()))
+    print("Overall win rate on the draw is "+str(draw["won"].mean()))
+    play = play[play["cards"]<maxcards*6/6.8]
+    draw = draw[draw["cards"]<maxcards*6/6.8]
+    print("Win rate after mull to 6 on the play is "+str(play["won"].mean()))
+    print("Win rate after mull to 6 on the draw is "+str(draw["won"].mean()))
+    play = play[play["cards"]<maxcards*5/6.8]
+    draw = draw[draw["cards"]<maxcards*5/6.8]
+    print("Win rate after mull to 5 on the play is "+str(play["won"].mean()))
+    print("Win rate after mull to 5 on the draw is "+str(draw["won"].mean()))
+    play = play[play["cards"]<maxcards*4/6.8]
+    draw = draw[draw["cards"]<maxcards*4/6.8]
+    print("Win rate after mull to 4 on the play is "+str(play["won"].mean()))
+    print("Win rate after mull to 4 on the draw is "+str(draw["won"].mean()))
+
 def describe(path):
     pd.read_csv(path, header=0).describe().to_csv("describe.csv")
 
