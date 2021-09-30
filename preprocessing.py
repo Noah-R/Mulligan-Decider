@@ -17,15 +17,6 @@ def getAllCardColumns(dataset):
             columns.append(name)
     return columns
 
-def rowToHand(row, columns):#deprecated, takes way too long to run as written
-    cards=[]
-    if(row.index%10000==0):
-        print(row.index)
-    for colName in columns:
-        for num in range(int(row[colName])):
-            cards.append(colName.replace("opening_hand_", ""))
-    return cards
-
 def getColumns(sets, condition):
     if type(sets) is not list:
         sets=[sets]
@@ -37,6 +28,18 @@ def getColumns(sets, condition):
                 if("//" in cardname):
                     cardname=cardname[:cardname.index("//")-1]
                 cols.append(cardname)
+    return cols
+
+def getAllCardNames(sets):
+    if type(sets) is not list:
+        sets=[sets]
+    cols=[]
+    for cardSet in sets:
+        for card in cardSet:
+            cardname=card
+            if("//" in cardname):
+                cardname=cardname[:cardname.index("//")-1]
+            cols.append(cardname)
     return cols
 
 def rankToNumber(rank):
