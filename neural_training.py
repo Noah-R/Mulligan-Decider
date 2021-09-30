@@ -3,10 +3,11 @@ import pandas as pd
 import tensorflow as tf
 from preprocessing import neuralPreprocess, trainTestSplit, getMulliganWinRates
 
-trainingdata, testdata = trainTestSplit(neuralPreprocess("game_data_public.STX.PremierDraft.csv"), .1)
-trainingdata.to_csv("training_data.csv")
-testdata.to_csv("test_data.csv")
-print("preprocessing done")
+#trainingdata, testdata = trainTestSplit(neuralPreprocess("game_data_public.STX.PremierDraft.csv"), .1)
+#trainingdata.to_csv("training_data.csv")
+#testdata.to_csv("test_data.csv")
+testdata = pd.read_csv("test_data_29_sep.csv", header=0).drop(index=0, axis=1)
+trainingdata = pd.read_csv("training_data_29_sep.csv", header=0).drop(index=0, axis=1)
 
 target="won"
 learningrate=.001
@@ -15,12 +16,12 @@ epochs=100
 l2rate=.0001
 dropoutrate=0.1
 earlyStoppingPatience=10
-date="29_sep_2021_1"
+date="30_sep_2021_1"
 
 features=[]
 
 for col in trainingdata.keys():
-    if(col!=target):
+    if(col!=target and "Unnamed" not in col):
         features.append(tf.feature_column.numeric_column(col))
 
 model = tf.keras.models.Sequential([
