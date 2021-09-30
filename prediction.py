@@ -52,11 +52,9 @@ def enterExample(model, data):#configured for neural network
 
 
 model = tf.keras.models.load_model('model_30_sep_2021_1')
-data = pd.read_csv("test_data_29_sep.csv", header=0)
-data = data.drop(index=0, axis=1)
+data = pd.read_csv("test_data.csv", header=0)
 
 features = {name: np.array(value) for name, value in data.items()}
-features.pop("Unnamed: 0")
 label = np.array(features.pop("won"))
 
 preds = model.predict(x=features, verbose=1)
@@ -65,6 +63,6 @@ plotCalibrationCurve(preds, label)
 getAccuracy(preds, label)
 #model.evaluate(x=features, y=label, verbose=1)
 
-#data = pd.read_csv("training_data_29_sep.csv", header=0).drop(index=0, axis=1)
+#data = pd.read_csv("training_data.csv", header=0).drop(index=0, axis=1)
 #getMulliganWinRates(data, 1)
 #enterExample(model, data)
