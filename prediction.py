@@ -28,7 +28,6 @@ def getAccuracy(preds, label, threshold=.5):
             correct+=1
     print("Accuracy is "+str(correct/len(preds)))
 
-
 def getWeights(model):#Only works for the logistic regression model, with features on layer 0 and output on layer 1.
     cols=model.layers[0].get_config()["feature_columns"]
     weights=model.layers[1].get_weights()[0]
@@ -36,6 +35,19 @@ def getWeights(model):#Only works for the logistic regression model, with featur
     for index in range(len(cols)):
         print(str(cols[index]["config"]["key"])+": "+str(weights[index]))
     print("Bias: "+str(bias))
+
+def enterExample(model, data):#configured for neural network
+    features = {name: np.array([0.0]) for name, value in data.items()}
+    cards = float(input("Number of cards"))
+    onplay = float(input("On play? 1 for yes, 0 for no."))
+    features["cards"][0]=cards/7
+    features["on_play"][0]=onplay
+    for i in range(int(cards)):
+        card = input("Enter card name").replace(" ", "_").replace(",", "").replace("'", "")
+        features["opening_hand_"+card][0]+=1/7
+    preds = model.predict(x=features, verbose=1)
+    print(preds[0])
+
 
 model = tf.keras.models.load_model('model_29_sep_2021_1')
 data = pd.read_csv("test_data.csv", header=0)
@@ -53,3 +65,4 @@ getAccuracy(preds, label)
 data = pd.read_csv("training_data.csv", header=0)
 data = data.drop(index=0, axis=1)
 getMulliganWinRates(data, 1)
+#enterExample(model, data)
