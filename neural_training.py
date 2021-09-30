@@ -40,6 +40,7 @@ model.compile(
 )
 
 features = {name: np.array(value) for name, value in trainingdata.items()}
+features.pop("Unnamed: 0")
 label = np.array(features.pop(target))
 
 testfeatures = {name: np.array(value) for name, value in testdata.items()}

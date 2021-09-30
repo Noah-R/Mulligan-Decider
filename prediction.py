@@ -38,6 +38,8 @@ def getWeights(model):#Only works for the logistic regression model, with featur
 
 def enterExample(model, data):#configured for neural network
     features = {name: np.array([0.0]) for name, value in data.items()}
+    features.pop("Unnamed: 0")
+    features.pop("won")
     cards = float(input("Number of cards"))
     onplay = float(input("On play? 1 for yes, 0 for no."))
     features["cards"][0]=cards/7
@@ -49,11 +51,12 @@ def enterExample(model, data):#configured for neural network
     print(preds[0])
 
 
-model = tf.keras.models.load_model('model_29_sep_2021_1')
+model = tf.keras.models.load_model('model_30_sep_2021_1')
 data = pd.read_csv("test_data_29_sep.csv", header=0)
 data = data.drop(index=0, axis=1)
 
 features = {name: np.array(value) for name, value in data.items()}
+features.pop("Unnamed: 0")
 label = np.array(features.pop("won"))
 
 preds = model.predict(x=features, verbose=1)
@@ -62,6 +65,6 @@ plotCalibrationCurve(preds, label)
 getAccuracy(preds, label)
 #model.evaluate(x=features, y=label, verbose=1)
 
-data = pd.read_csv("training_data_29_sep.csv", header=0).drop(index=0, axis=1)
-getMulliganWinRates(data, 1)
+#data = pd.read_csv("training_data_29_sep.csv", header=0).drop(index=0, axis=1)
+#getMulliganWinRates(data, 1)
 #enterExample(model, data)
