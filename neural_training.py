@@ -17,7 +17,7 @@ epochs=100
 l2rate=.0001
 dropoutrate=0.1
 earlyStoppingPatience=10
-date="30_sep_2021_2"
+date="30_sep_2021_4"
 
 features=[]
 
@@ -61,6 +61,6 @@ model.fit(
 )
 
 model.save("model_"+date)
-getMulliganWinRates(trainingdata, 1)
+#getMulliganWinRates(trainingdata, 1)
 
 #WARNING:tensorflow:Layers in a Sequential model should only have a single input tensor, but we receive a <class 'dict'>... Consider rewriting this model with the Functional API.

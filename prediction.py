@@ -8,7 +8,7 @@ from preprocessing import getMulliganWinRates
 
 def showExamples(num, data, preds, label):#only configured for neural-preprocessed data
     for i in range(num):
-        d = data.iloc[i, :]
+        d = data.iloc[np.random.randint(0, len(data.index)), :]
         d["on_play"] = d["on_play"]/7
         d["won"] = d["won"]/7
         d = d[d>0]*7
@@ -51,14 +51,14 @@ def enterExample(model, data):#configured for neural network, should reconfigure
     print(preds[0])
 
 
-model = tf.keras.models.load_model('model_30_sep_2021_2')
+model = tf.keras.models.load_model('model_30_sep_2021_4')
 data = pd.read_csv("test_data.csv", header=0)
 
 features = {name: np.array(value) for name, value in data.items()}
 label = np.array(features.pop("won"))
 
 preds = model.predict(x=features, verbose=1)
-showExamples(20, data, preds, label)
+showExamples(5, data, preds, label)
 plotCalibrationCurve(preds, label)
 getAccuracy(preds, label)
 #model.evaluate(x=features, y=label, verbose=1)
