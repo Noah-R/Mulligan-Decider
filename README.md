@@ -1,45 +1,12 @@
 # Mulligan-Decider
 
-## Current Neural Network Model
+This is a machine learning model for Magic: the Gathering, which decides whether a player should keep or mulligan an opening hand in a limited game. The model predicts the probability of winning if the player keeps the hand using a neural network which trains on 17lands game data. It predicts the probability of winning if the player mulligans the hand by taking the simple win rate of all hands in the dataset with fewer cards. The player is advised to pick the option with the higher chance of winning.
 
-	Play/draw
+Of note, the dataset only shows the cards in the final opening hand, after resolving all mulligans and putting cards on bottom of library. This leads to some bias. For instance, there are very few one-land hands in the data set, because players generally mulligan one-land hands. The only one-land hands in the dataset are hands that the player chose to keep, which means they likely have a disproportionately high number of early plays/cheap draw spells/mana fixing. Therefore, the model likely underestimates the extent to which only having one land hurts your chances of winning.
 
-	Number of cards in hand, divided by 7
+This also leads to a complexity of interpretation with regard to hands of less than seven cards. On a mulligan to six, for instance, the model predicts the probability of winning based on the six cards ultimately kept, but the player sees seven cards when deciding whether to mulligan to five, before putting one on bottom of library. A future function will be implemented to predict the probability of winning for each six-card combination of the seven cards, and the user will be advised to choose the combination with the highest chance of winning.
 
-	Number of each individual card in hand, divided by 7
-
-## Current Logistic Regression Model
-
-	Play/draw
-
-	Number of cards in hand
-
-	Whether the hand is a two, three, four, or five lander
-
-	Number of one, two, three, and four mana spells
-
-## Addable Features to Logistic Regression Model
-
-	Number of each card in opening hand
-	
-	Number of creatures/noncreatures
-	
-	Number of spells of each color
-	
-	Number of double/triple/quad symbol spells of each color
-	
-	Number of sources of each color
-	
-	Has turn one through turn four play, with mana to cast
-
-	Is missing colors for spells in hand
-
-	Taplands/colors
-	
-	Interaction terms between cards
-	
-	Opponent mulligans
-
-	User win rate
+This repository also includes a logistic regression model, which makes significantly worse predictions. It was implemented mostly as a quick and dirty way to get TensorFlow configured and working, but it also serves to establish a linear baseline for predictive accuracy to compare more complex models against.
 
 Data and license are available at https://www.17lands.com/public_datasets
+Some functions also use MTGJSON set files, which are available at https://mtgjson.com/downloads/all-sets/
