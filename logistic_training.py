@@ -16,7 +16,7 @@ date="25_sep_2021_1"
 features=[]
 
 for col in trainingdata.keys():
-    if(col!=target):
+    if(col!=target and "Unnamed" not in col):
         features.append(tf.feature_column.numeric_column(col))
 
 model = tf.keras.models.Sequential([
@@ -31,6 +31,7 @@ model.compile(
 )
 
 features = {name: np.array(value) for name, value in trainingdata.items()}
+features.pop("Unnamed: 0")
 label = np.array(features.pop(target))
 
 testfeatures = {name: np.array(value) for name, value in testdata.items()}
