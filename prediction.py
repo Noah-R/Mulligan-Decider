@@ -51,7 +51,7 @@ def enterExample(model, data):#configured for neural network, should reconfigure
     print(preds[0])
 
 
-model = tf.keras.models.load_model('model_30_sep_2021_4')
+model = tf.keras.models.load_model('model_30_sep_2021_2')
 data = pd.read_csv("test_data.csv", header=0)
 
 features = {name: np.array(value) for name, value in data.items()}

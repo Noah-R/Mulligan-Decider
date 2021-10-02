@@ -17,7 +17,7 @@ epochs=100
 l2rate=.0001
 dropoutrate=0.1
 earlyStoppingPatience=10
-date="30_sep_2021_4"
+date="30_sep_2021_5"
 
 features=[]
 

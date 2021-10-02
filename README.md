@@ -10,3 +10,11 @@ This repository also includes a logistic regression model, which makes significa
 
 Data and license are available at https://www.17lands.com/public_datasets
 Some functions also use MTGJSON set files, which are available at https://mtgjson.com/downloads/all-sets/
+
+## Near term things for me to do
+
+    Make the web interface actually predict using TensorFlowJS
+
+    Write the card bottoming function
+
+    Set up a website to host this on
