@@ -13,7 +13,7 @@ Some functions also use MTGJSON set files, which are available at https://mtgjso
 
 ## Near term things for me to do
 
-    Make the web interface actually predict using TensorFlowJS
+    Set up a web server to test webapp
 
     Write the card bottoming function
 
