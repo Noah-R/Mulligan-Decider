@@ -18,3 +18,5 @@ Some functions also use MTGJSON set files, which are available at https://mtgjso
     Write the card bottoming function
 
     Set up a website to host this on
+
+    Try a three-layer configuration to use more data
