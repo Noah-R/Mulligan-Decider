@@ -13,7 +13,7 @@ Some functions also use MTGJSON set files, which are available at https://mtgjso
 
 ## Near term things for me to do
 
-    Set up a web server to test webapp
+    Make the model run server side
 
     Write the card bottoming function
 
