@@ -10,7 +10,6 @@
             color: white;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
 </head>
 <body>
     <input type="text" placeholder="Enter card name" id="myInput" onkeyup="filterFunction()">
@@ -20,42 +19,28 @@
     </div>
     <input type="checkbox" id="onplay">
     <label for="checkbox">On Play?</label>
+    <p>Cards:</p>
+    <input type="radio" id="7cards" name="cards" value="7" checked>
+    <label for="huey">7</label>
+    <input type="radio" id="6cards" name="cards" value="6">
+    <label for="huey">6</label>
+    <input type="radio" id="5cards" name="cards" value="5">
+    <label for="huey">5</label>
+    <input type="radio" id="4cards" name="cards" value="4">
+    <label for="huey">4</label>
+    <input type="radio" id="3cards" name="cards" value="3">
+    <label for="huey">3</label>
+    <input type="radio" id="2cards" name="cards" value="2">
+    <label for="huey">2</label>
+    <input type="radio" id="1cards" name="cards" value="1">
+    <label for="huey">1</label>
+      
     <button onclick="submit()">Submit</button>
     
     <script>
     cards = ['Approach of the Second Sun', 'Day of Judgment', 'Defiant Strike', 'Divine Gambit', 'Ephemerate', 'Gift of Estates', 'Gods Willing', 'Mana Tithe', 'Revitalize', 'Swords to Plowshares', "Teferi's Protection", "Blue Sun's Zenith", 'Brainstorm', 'Compulsive Research', 'Counterspell', 'Memory Lapse', "Mind's Desire", 'Negate', 'Opt', 'Strategic Planning', "Tezzeret's Gambit", 'Time Warp', 'Whirlwind Denial', 'Agonizing Remorse', 'Crux of Fate', 'Dark Ritual', 'Demonic Tutor', 'Doom Blade', 'Duress', 'Eliminate', 'Inquisition of Kozilek', 'Sign in Blood', 'Tainted Pact', 'Tendrils of Agony', 'Village Rites', 'Chaos Warp', 'Claim the Firstborn', 'Faithless Looting', 'Grapeshot', 'Increasing Vengeance', 'Infuriate', 'Lightning Bolt', "Mizzix's Mastery", 'Shock', 'Stone Rain', 'Thrill of Possibility', "Urza's Rage", 'Abundant Harvest', 'Adventurous Impulse', 'Channel', 'Cultivate', 'Harmonize', 'Krosan Grip', 'Natural Order', 'Primal Command', 'Regrowth', 'Snakeskin Veil', 'Weather the Storm', 'Despark', 'Electrolyze', 'Growth Spiral', 'Lightning Helix', 'Putrefy', 'Environmental Sciences', 'Expanded Anatomy', 'Introduction to Annihilation', 'Introduction to Prophecy', 'Mascot Exhibition', 'Wandering Archaic', 'Academic Probation', 'Ageless Guardian', 'Beaming Defiance', 'Clever Lumimancer', 'Combat Professor', 'Defend the Campus', 'Detention Vortex', 'Devastating Mastery', 'Dueling Coach', 'Eager First-Year', 'Elite Spellbinder', 'Expel', 'Guiding Voice', 'Leonin Lightscribe', "Mavinda, Students' Advocate", 'Pilgrim of the Ages', 'Pillardrop Rescuer', 'Professor of Symbology', 'Reduce to Memory', 'Secret Rendezvous', "Semester's End", 'Show of Confidence', 'Sparring Regimen', 'Star Pupil', "Stonebinder's Familiar", 'Stonerise Spirit', 'Strict Proctor', 'Study Break', 'Thunderous Orator', 'Arcane Subtraction', 'Archmage Emeritus', 'Burrog Befuddler', 'Bury in Books', 'Curate', 'Divide by Zero', 'Dream Strix', 'Frost Trickster', 'Ingenious Mastery', 'Kelpie Guide', "Mentor's Guidance", 'Mercurial Transformation', 'Multiple Choice', 'Pop Quiz', 'Reject', 'Resculpt', 'Serpentine Curve', 'Snow Day', 'Solve the Equation', 'Soothsayer Adept', 'Symmetry Sage', 'Teachings of the Archaics', 'Tempted by the Oriq', 'Test of Talents', 'Vortex Runner', 'Waterfall Aerialist', 'Wormhole Serpent', 'Arrogant Poet', 'Baleful Mastery', 'Brackish Trudge', 'Callous Bloodmage', 'Confront the Past', 'Crushing Disappointment', 'Essence Infusion', 'Eyetwitch', 'Flunk', 'Go Blank', 'Hunt for Specimens', 'Lash of Malice', 'Leech Fanatic', 'Mage Hunter', "Mage Hunters' Onslaught", 'Necrotic Fumes', 'Novice Dissector', 'Oriq Loremage', 'Plumb the Forbidden', "Poet's Quill", 'Professor Onyx', "Professor's Warning", 'Promising Duskmage', 'Sedgemoor Witch', 'Specter of the Fens', 'Tenured Inkcaster', 'Umbral Juke', 'Unwilling Ingredient', 'Academic Dispute', 'Ardent Dustspeaker', 'Blood Age General', 'Conspiracy Theorist', 'Crackle with Power', 'Draconic Intervention', "Dragon's Approach", 'Efreet Flamepainter', 'Enthusiastic Study', 'Explosive Welcome', 'Fervent Mastery', 'First Day of Class', 'Fuming Effigy', 'Grinning Ignus', 'Hall Monitor', 'Heated Debate', 'Igneous Inspiration', 'Illuminate History', 'Illustrious Historian', 'Mascot Interception', 'Pigment Storm', 'Pillardrop Warden', 'Retriever Phoenix', 'Start from Scratch', 'Storm-Kiln Artist', 'Sudden Breakthrough', 'Tome Shredder', 'Twinscroll Shaman', 'Accomplished Alchemist', 'Basic Conjuration', 'Bayou Groff', 'Big Play', 'Bookwurm', 'Charge Through', 'Containment Breach', 'Devouring Tendrils', 'Dragonsguard Elite', 'Ecological Appreciation', 'Emergent Sequence', 'Exponential Growth', 'Field Trip', 'Fortifying Draught', 'Gnarled Professor', 'Honor Troll', 'Karok Wrangler', 'Leyline Invocation', 'Mage Duel', 'Master Symmetrist', 'Overgrown Arch', 'Professor of Zoomancy', 'Reckless Amplimancer', 'Scurrid Colony', 'Spined Karok', 'Springmane Cervin', 'Tangletrap', 'Verdant Mastery', 'Augmenter Pugilist', 'Blex, Vexing Pest', 'Extus, Oriq Overlord', 'Flamescroll Celebrant', 'Jadzi, Oracle of Arcavios', 'Kianne, Dean of Substance', 'Mila, Crafty Companion', 'Pestilent Cauldron', 'Plargg, Dean of Chaos', 'Rowan, Scholar of Sparks', 'Selfless Glyphweaver', 'Shaile, Dean of Radiance', 'Torrent Sculptor', 'Uvilda, Dean of Perfection', 'Valentin, Dean of the Vein', 'Aether Helix', 'Beledros Witherbloom', 'Biomathematician', 'Blade Historian', 'Blood Researcher', 'Blot Out the Sky', 'Body of Research', 'Closing Statement', 'Cram Session', 'Creative Outburst', 'Culling Ritual', 'Culmination of Studies', 'Daemogoth Titan', 'Daemogoth Woe-Eater', 'Deadly Brew', 'Decisive Denial', 'Dina, Soul Steeper', 'Double Major', 'Dramatic Finale', 'Elemental Expressionist', 'Elemental Masterpiece', 'Elemental Summoning', 'Eureka Moment', 'Exhilarating Elocution', 'Expressive Iteration', 'Fractal Summoning', 'Fracture', 'Galazeth Prismari', 'Golden Ratio', 'Harness Infinity', 'Hofri Ghostforge', 'Humiliate', 'Infuse with Vitality', 'Inkling Summoning', 'Kasmina, Enigma Sage', 'Killian, Ink Duelist', 'Lorehold Apprentice', 'Lorehold Command', 'Lorehold Excavation', 'Lorehold Pledgemage', 'Maelstrom Muse', 'Magma Opus', 'Make Your Mark', 'Manifestation Sage', 'Moldering Karok', 'Mortality Spear', 'Needlethorn Drake', 'Oggyar Battle-Seer', 'Owlin Shieldmage', 'Pest Summoning', 'Practical Research', 'Prismari Apprentice', 'Prismari Command', 'Prismari Pledgemage', 'Quandrix Apprentice', 'Quandrix Command', 'Quandrix Cultivator', 'Quandrix Pledgemage', 'Quintorius, Field Historian', 'Radiant Scrollwielder', 'Reconstruct History', 'Relic Sloth', 'Returned Pastcaller', 'Rip Apart', 'Rise of Extus', 'Rootha, Mercurial Artist', 'Rushed Rebirth', 'Shadewing Laureate', 'Shadrix Silverquill', 'Silverquill Apprentice', 'Silverquill Command', 'Silverquill Pledgemage', 'Silverquill Silencer', 'Spectacle Mage', 'Spirit Summoning', 'Spiteful Squad', 'Square Up', 'Stonebound Mentor', 'Tanazir Quandrix', 'Teach by Example', 'Tend the Pests', 'Thrilling Discovery', 'Vanishing Verse', 'Velomachus Lorehold', 'Venerable Warsinger', 'Witherbloom Apprentice', 'Witherbloom Command', 'Witherbloom Pledgemage', 'Zimone, Quandrix Prodigy', 'Biblioplex Assistant', 'Campus Guide', 'Codie, Vociferous Codex', 'Cogwork Archivist', 'Excavated Wall', 'Letter of Acceptance', 'Reflective Golem', 'Spell Satchel', 'Strixhaven Stadium', 'Team Pennant', 'Zephyr Boots', 'Access Tunnel', 'Archway Commons', 'The Biblioplex', 'Frostboil Snarl', 'Furycalm Snarl', 'Hall of Oracles', 'Lorehold Campus', 'Necroblossom Snarl', 'Prismari Campus', 'Quandrix Campus', 'Shineshadow Snarl', 'Silverquill Campus', 'Vineglimmer Snarl', 'Witherbloom Campus', 'Plains', 'Island', 'Swamp', 'Mountain', 'Forest'];
     hand=[]
 
-    async function load() {
-        const model = await tf.loadLayersModel('model.json');
-        return model;
-    };
-    const model = load();
-
-    function predict(model) {
-        const listOfTensors = {}
-        listOfTensors["cards"]=(tf.tensor([parseFloat(hand.length)/7.0], name="cards"));
-        listOfTensors["on_play"]=(tf.tensor([parseFloat(document.getElementById('onplay').checked)], name="on_play"));
-        for(var x=0; x<cards.length; x++){
-            listOfTensors[cards[x]]=[0.0]
-        }
-        for(var x=0; x<hand.length; x++){
-            listOfTensors[hand[x]][0]+=1.0/7.0
-        }
-        for(var x=0; x<cards.length; x++){
-            listOfTensors[cards[x]]=(tf.Tensor(listOfTensors[cards[x]], name=cardToColumn(cards[x])))
-        }
-
-        model.then(model => {
-            let result = model.predict(Object.values(listOfTensors));
-            alert(result);
-            result = result.round().dataSync()[0];
-            alert(result);
-        });
-    };
-    function cardToColumn(cardname){
-        return "opening_hand_"+cardname.replace(" ", "_").replace(",", "").replace("'", "")
-    }
     function updateHand(){
         roster = "";
         for(var x=0; x<hand.length; x++){
@@ -68,6 +53,7 @@
         hand.push(e.textContent);
         updateHand();
     }
+
     function filterFunction() {
         input = document.getElementById("myInput");
         filter = input.value.toUpperCase();
@@ -78,12 +64,21 @@
             }
         }
     }
+    function getNumCards() {
+            var buttons = document.getElementsByName('cards');
+            for(var i=0; i<buttons.length; i++) {
+                if(buttons[i].checked){
+                    return parseInt(buttons[i].value);
+                }
+            }
+            return -1;
+        }
     function submit(){
         console.log("Model will predict on the following");
         console.log("Hand: "+hand);
-        console.log("Cards: "+hand.length);
+        console.log("Cards: "+getNumCards());
         console.log("On play: "+document.getElementById('onplay').checked);
-        predict(model)
+        //this is where we request a prediction from the server, and handle the response
     }
     </script>
 </body>
