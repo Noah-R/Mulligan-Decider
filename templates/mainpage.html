@@ -78,7 +78,22 @@
         console.log("Hand: "+hand);
         console.log("Cards: "+getNumCards());
         console.log("On play: "+document.getElementById('onplay').checked);
-        //this is where we request a prediction from the server, and handle the response
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/predict");
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        stuff = JSON.stringify({
+            hand: String(hand),
+            cards: getNumCards(),
+            onplay: document.getElementById('onplay').checked
+        });
+        console.log(stuff);
+        xhr.send(stuff);
+
+        xhr.onload = function() {
+            console.log(this.responseText);//JSON.parse(this.responseText)
+        }
     }
     </script>
 </body>
