@@ -11,20 +11,13 @@ This repository also includes a logistic regression model, which makes significa
 Data and license are available at https://www.17lands.com/public_datasets
 Some functions also use MTGJSON set files, which are available at https://mtgjson.com/downloads/all-sets/
 
-## Near term things for me to do
+## Near term roadmap
 
     Build out web app
         Front end
-        Prediction format
-        Explanation
+        Prediction presentation format
+        About these predictions
         User-proof
-
-    Generalize code for other sets/formats
-        Each set has its own files for
-            model
-            list of model features
-            list of card names
-            mulligan win rates
 
     Set up a website to host this on
 
