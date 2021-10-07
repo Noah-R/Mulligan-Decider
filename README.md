@@ -14,10 +14,10 @@ Some functions also use MTGJSON set files, which are available at https://mtgjso
 ## Near term roadmap
 
     Build out web app
-        Front end
-        Prediction presentation format
-        About these predictions
-        User-proof
+        Decide the best format for presenting predictions to the user
+        User-proof back end
+        Write a 'How this works' section
+        Improve front end
 
     Set up a website to host this on
 
