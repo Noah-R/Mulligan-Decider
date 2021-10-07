@@ -13,8 +13,22 @@ Some functions also use MTGJSON set files, which are available at https://mtgjso
 
 ## Near term things for me to do
 
-    Make the model run server side
+    Build out web app
+        Front end
+        Prediction format
+        Explanation
+        User-proof
+
+    Generalize code for other sets/formats
+        Each set has its own files for
+            model
+            list of model features
+            list of card names
+            mulligan win rates
 
     Set up a website to host this on
 
-    Try a three-layer configuration to use more data
+    Improve machine learning stack
+        Try a three-layer configuration
+        Configure a model that can use all the data
+        Improve algorithm efficiency of prediction function
