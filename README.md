@@ -21,8 +21,6 @@ Some functions also use MTGJSON set files, which are available at https://mtgjso
     Set up a website to host this on
 
     Improve machine learning stack
-        Try a three-layer configuration
-        Configure a model that can use all the data
         Improve algorithm efficiency of prediction function
         Create a neural network to predict mulligan win rates
             Train on examples of games where the player mulliganed, using only play/draw, hand size, and seven random cards from the deck_ columns

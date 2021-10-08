@@ -11,19 +11,15 @@ trainingdata = pd.read_csv("training_data.csv", header=0)
 testdata = pd.read_csv("test_data.csv", header=0)
 
 
-#changes from 30_sep_2021_2
-#third 128 node layer
-#third dropout layer
-#batchsize 1024->2048
-#dropoutrate .1->.05
 target="won"
 learningrate=.001
 batchsize=2048
 epochs=100
-l2rate=.0001
-dropoutrate=0.05
+l2rate=.00015
+dropoutrate=0.1
 earlyStoppingPatience=10
-date="07_oct_2021_1"
+layersize=128
+date="08_oct_2021_1"
 
 features=[]
 
@@ -33,11 +29,9 @@ for col in trainingdata.keys():
 
 model = tf.keras.models.Sequential([
     tf.keras.layers.DenseFeatures(features),
-    tf.keras.layers.Dense(units=128, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(l=l2rate), name='Hidden1'),
+    tf.keras.layers.Dense(units=layersize, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(l=l2rate), name='Hidden1'),
     tf.keras.layers.Dropout(rate=dropoutrate),
-    tf.keras.layers.Dense(units=128, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(l=l2rate), name='Hidden2'),
-    tf.keras.layers.Dropout(rate=dropoutrate),
-    tf.keras.layers.Dense(units=128, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(l=l2rate), name='Hidden3'),
+    tf.keras.layers.Dense(units=layersize, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(l=l2rate), name='Hidden2'),
     tf.keras.layers.Dropout(rate=dropoutrate),
     tf.keras.layers.Dense(units=1, activation=tf.sigmoid, name="Output")
 ])
