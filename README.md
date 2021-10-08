@@ -1,6 +1,6 @@
 # Mulligan-Decider
 
-This is a machine learning model for Magic: the Gathering, which decides whether a player should keep or mulligan an opening hand in a limited game. The model predicts the probability of winning if the player keeps the hand using a neural network which trains on 17lands game data. It predicts the probability of winning if the player mulligans the hand by taking the simple win rate of all hands in the dataset with fewer cards. The player is advised to pick the option with the higher chance of winning.
+This is a machine learning model for Magic: the Gathering, which decides whether a player should keep or mulligan an opening hand in a limited game. The model predicts the probability of winning if the player keeps the hand, using a neural network which trains on 17lands game data. It predicts the probability of winning if the player mulligans the hand, by taking the win rate of all hands in the dataset with fewer cards and the same value of play first/draw first(This is obviously a bit simplistic, since not all decks mulligan equally well). The player is advised to pick the option with the higher chance of winning.
 
 Of note, the dataset only shows the cards in the final opening hand, after resolving all mulligans and putting cards on bottom of library. This leads to some bias. For instance, there are very few one-land hands in the data set, because players generally mulligan one-land hands. The only one-land hands in the dataset are hands that the player chose to keep, which means they likely have a disproportionately high number of early plays/cheap draw spells/mana fixing. Therefore, the model likely underestimates the extent to which only having one land hurts your chances of winning.
 
@@ -14,7 +14,6 @@ Some functions also use MTGJSON set files, which are available at https://mtgjso
 ## Near term roadmap
 
     Build out web app
-        Decide the best format for presenting predictions to the user
         User-proof back end
         Write a 'How this works' section
         Improve front end
@@ -25,3 +24,5 @@ Some functions also use MTGJSON set files, which are available at https://mtgjso
         Try a three-layer configuration
         Configure a model that can use all the data
         Improve algorithm efficiency of prediction function
+        Create a neural network to predict mulligan win rates
+            Train on examples of games where the player mulliganed, using only play/draw, hand size, and seven random cards from the deck_ columns

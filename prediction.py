@@ -6,15 +6,19 @@ from itertools import combinations
 
 #configured for neural network
 #example is a list, list[0] is number of cards as a float, list[1] is play/draw as 1.0 or 0.0, list [2:] are the names of cards in hand as formattedon front of card
-def predictExample(example, model, keys):
+def predictExample(example, model, keys, mulliganWinRates=None):
     if(len(example)==example[0]+2):
         features = {name: np.array([0.0]) for name in keys}
         features["cards"][0]=example[0]/7
         features["on_play"][0]=example[1]
         for card in example[2:]:
             features["opening_hand_"+card.replace(" ", "_").replace(",", "").replace("'", "")][0]+=1/7
-        preds = model.predict(x=features, verbose=0)
-        return ("Probability of winning: "+str(preds[0]))
+        pred = model.predict(x=features, verbose=0)[0][0]
+        mwr = mulliganWinRates[int(example[0]-1)][int(example[1])]
+        result = getSuggestion(pred, mwr)
+        result += "\nProbability of winning with this hand: "+str(pred)
+        result += "\nProbability of winning after mulliganing: "+str(mwr)
+        return result
     
     elif(len(example)>example[0]+2):#this could also do what the above does, but it's a little slower
         possibleHands = list(combinations(range(2, len(example)), int(example[0])))
@@ -38,10 +42,36 @@ def predictExample(example, model, keys):
         bestHand = []
         for index in bestHandIndices:
             bestHand.append(example[index])
-        return ("Keep the following cards: "+str(bestHand)+"\nProbability of winning: "+str(preds[bestIndex]))
+        
+        pred = preds[bestIndex][0]
+        mwr = mulliganWinRates[int(example[0]-1)][int(example[1])]
+        result = getSuggestion(pred, mwr)
+        result += "\nBest combination of cards"+str(bestHand)
+        result += "\nProbability of winning with this hand: "+str(pred)
+        result += "\nProbability of winning after mulliganing: "+str(mwr)
+        return result
     
     else:
         print("Something went seriously wrong here, the hand is missing some cards")
+
+def getSuggestion(pred, mwr):
+    if(pred>mwr*1.75):
+        return "Snap keep"
+    if(pred<mwr/1.75):
+        return "Snap mulligan"
+    if(pred>mwr*1.15):
+        return "Keep"
+    if(pred<mwr/1.15):
+        return "Mulligan"
+    if(pred>mwr*1.04):
+        return "Keep, but it's close"
+    if(pred<mwr/1.04):
+        return "Mulligan, but it's close"
+    if(pred>mwr):
+        return "Keep, but it's very close"
+    if(pred<mwr):
+        return "Mulligan, but it's very close"
+    return "Somehow, keeping and mulliganing are both exactly equally good, out to 12 decimal places of precision. Please contact Noah-R on GitHub, I would like to know how you possibly got this result."
 
 def enterExample():
     hand = [float(input("Number of cards")), float(input("On play? 1 for yes, 0 for no."))]
@@ -50,7 +80,9 @@ def enterExample():
         hand.append(input("Enter card name"))
     return hand
 
-def setup(modelname, keyfile):
-    model = tf.keras.models.load_model(modelname)
-    keys=open(keyfile, "r").read().strip('][').strip('\"').split('\", \"')
-    return model, keys
+def setup(model, keys, cardnames, mwr):#can write this out to generate these files if they don't yet exist
+    model = tf.keras.models.load_model(model)
+    keys = eval(open(keys, "r").read())#open(keys, "r").read().strip('][').strip('\"').split('\", \"')
+    cardnames = open(cardnames, "r").read()
+    mulliganWinRates = eval(open(mwr, "r").read())
+    return model, keys, cardnames, mulliganWinRates

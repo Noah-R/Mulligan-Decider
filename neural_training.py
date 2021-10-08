@@ -61,6 +61,5 @@ model.fit(
 )
 
 model.save("model_"+date)
-#getMulliganWinRates(trainingdata, 1)
 
 #WARNING:tensorflow:Layers in a Sequential model should only have a single input tensor, but we receive a <class 'dict'>... Consider rewriting this model with the Functional API.

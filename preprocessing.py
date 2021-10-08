@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import json
+from math import isnan
 
 def readSet(setname):
     #First download the individual set file from MTGJSON, then call this function passing filename, returns a dictionary of card names mapped to card data dictionaries
@@ -78,23 +79,19 @@ def trainTestSplit(d, split):
     splitpoint=int(len(d)*(1-split))
     return d[:splitpoint], d[splitpoint:]
 
-def getMulliganWinRates(d, maxcards):#maxcards is the "cards" value for a 7 card hand, 1 after neural preprocessing, 7 after logistic preprocessing
+def getMulliganWinRates(d):#configured for neural preprocessed data
     play = d[d["on_play"]==1.0]
     draw = d[d["on_play"]==0.0]
-    print("Overall win rate on the play is "+str(play["won"].mean()))
-    print("Overall win rate on the draw is "+str(draw["won"].mean()))
-    play = play[play["cards"]<maxcards*6/6.8]
-    draw = draw[draw["cards"]<maxcards*6/6.8]
-    print("Win rate after mull to 6 on the play is "+str(play["won"].mean()))
-    print("Win rate after mull to 6 on the draw is "+str(draw["won"].mean()))
-    play = play[play["cards"]<maxcards*5/6.8]
-    draw = draw[draw["cards"]<maxcards*5/6.8]
-    print("Win rate after mull to 5 on the play is "+str(play["won"].mean()))
-    print("Win rate after mull to 5 on the draw is "+str(draw["won"].mean()))
-    play = play[play["cards"]<maxcards*4/6.8]
-    draw = draw[draw["cards"]<maxcards*4/6.8]
-    print("Win rate after mull to 4 on the play is "+str(play["won"].mean()))
-    print("Win rate after mull to 4 on the draw is "+str(draw["won"].mean()))
+    rates={}
+    for cards in range(7, -1, -1):
+        rates[cards]=[draw["won"].mean(), play["won"].mean()]
+        if(isnan(rates[cards][0])):
+            rates[cards][0]=0.0
+        if(isnan(rates[cards][1])):
+            rates[cards][1]=0.0
+        play = play[play["cards"]<float(cards)/7.0]
+        draw = draw[draw["cards"]<float(cards)/7.0]
+    return rates
 
 def describe(path):
     pd.read_csv(path, header=0).describe().to_csv("describe.csv")
