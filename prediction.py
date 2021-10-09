@@ -9,7 +9,7 @@ from itertools import combinations
 def predictExample(example, model, keys, mulliganWinRates=None):
     if(len(example)==example[0]+2):
         features = {name: np.array([0.0]) for name in keys}
-        features["cards"][0]=example[0]/7
+        features["cards"][0]=example[0]/7.0
         features["on_play"][0]=example[1]
         for card in example[2:]:
             features["opening_hand_"+card.replace(" ", "_").replace(",", "").replace("'", "")][0]+=1/7

@@ -7,13 +7,12 @@ The model also advises, in the case of mulligans where more cards are submitted 
 This repository also includes a logistic regression model, which makes significantly worse predictions. It was implemented mostly as a quick and dirty way to get TensorFlow configured and working, but it also serves to establish a linear baseline for predictive accuracy to compare more complex models against.
 
 Data and license are available at https://www.17lands.com/public_datasets
+
 Some functions also use MTGJSON set files, which are available at https://mtgjson.com/downloads/all-sets/
 
 ## Near term roadmap
-
-    Make the front end nicer
+    Write some CSS
     Set up a website to host this on
-    Improve algorithm efficiency of prediction function
 
 ## Room for expansion
     Create a neural network to predict mulligan win rates
