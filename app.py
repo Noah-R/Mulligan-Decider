@@ -15,3 +15,8 @@ def predict():
     example = [float(req["cards"]), float(req["onplay"])] + str(req["hand"]).replace(", ", " ").split(",")
     result = predictExample(example, model, keys, mulliganWinRates)
     return escape(result)
+
+
+@app.route("/about", methods=['GET'])
+def about_page():
+    return render_template('about.html')

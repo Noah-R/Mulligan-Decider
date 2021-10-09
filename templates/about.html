@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        About Mulligan Decider
+    </title>
+    <link href={{ url_for('static', filename='quagtail.png') }} rel="icon" type="image/png" />
+    <link href={{ url_for('static', filename='main.css') }} rel="stylesheet" type="text/css">
+    
+</head>
+<body>
+    <h1>How this Application Works</h1>
+    <h2>The Basics</h2>
+    <p>
+        This application uses machine learning to predict the probability of winning with a given opening hand, based on <a href="https://www.17Lands.com/public_datasets">game data from 17Lands</a>. It compares this probability to the average win rate after mulliganing to one fewer card, and tells you whether it's better to keep or mulligan.<br/><br/>
+        It also helps you decide which cards to put on bottom of library if you mulligan. If you submit seven cards, but indicate that the hand is a mulligan to six, the model will predict the probability of winning with each possible combination of six cards, and will tell you the best one.
+    </p>
+    <h2>A Note About Probabilities</h2>
+    </p>
+        Obviously, it's impossible to figure out for sure who will win the game based on only one player's opening hand. It'd be pretty boring to actually play the game if you could. Hence, the model gives a probabilistic interpretation. It will often be "wrong" in the sense that hands with high probabilities will sometimes lose, and vice versa. In the long run, however, the predictions will be well calibrated, meaning that for all hands that the model assigns a 60% chance of winning, about 60% of them will win, and about 40% will lose.
+    </p>
+    <h2>Where the Model Fails</h2>
+    <p>
+        The model makes good predictions on the kinds of hands that players draw and keep often, or at least occasionally. However, it makes significantly worse predictions on the types of hands that appear rarely or never. Specifically, hands that are very obvious mulligans, no-landers, all-landers, and hands with weird combinations of cards, are likely to have inflated probabilities.<br/><br/>
+        This is because the data that the model learns from only shows hands that people decided to keep. Every Magic player knows that a no-land hand is unlikely to win, therefore everyone mulligans them, therefore the model has never seen one, therefore it hasn't been able to learn how good they are, therefore it defaults to predicting something close to the average win rate.
+    </p>
+    <h2>Other Limitations</h2>
+    <p>
+        The probability of winning if you keep a hand is very specific, it is fitted to the exact combination of cards in the hand. The probability of winning if you mulligan a hand, however, is much more general. If you're on the play on 7, it will give the same probability every time for mulliganing to 6 on the play. Without asking the user to enter their entire deck, there isn't much info to work with to make a more personalized prediction, so a simple average is used. These probabilites are less so a prediction, and more so a reference to put the keep probabilites in better context. You probably have a better idea of how well your deck mulligans, compared to average.<br/><br/>
+        The model also implicitly assumes the same conditions as the games recorded on 17Lands. If your conditions are different, you may need to adjust these probabilites. Namely, the model is trained on Arena Premier Draft data, so if you're playing something else, your probability of winning with a hand is probably a little higher, since your opponent doesn't have the benefit of the <a href="https://draftsim.com/mtg-arena-bo1-hand-smoothing/">best-of-one shuffler</a>. The model also assumes that you're roughly as skilled as as the average 17Lands user(which is more skilled than the average MTG Arena player), so you can adjust accordingly if you think that's significantly off base.<br/><br/>
+        Ultimately, all of this is to say that these predictions are not perfect. They're meant to be used in conjunction with your human decision-making process, not to just replace it. I hope they help you make more considered decisions.
+    </p>
+</body>
+</html>

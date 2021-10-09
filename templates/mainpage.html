@@ -4,12 +4,9 @@
     <title>
         Mulligan Decider
     </title>
-    <style>
-        html{
-            background-color: black;
-            color: white;
-        }
-    </style>
+    <link href={{ url_for('static', filename='quagtail.png') }} rel="icon" type="image/png" />
+    <link href={{ url_for('static', filename='main.css') }} rel="stylesheet" type="text/css">
+    
 </head>
 <body>
     <input type="text" placeholder="Enter card name" id="myInput" onkeyup="filterFunction()">
@@ -37,7 +34,8 @@
       
     <button onclick="submit()">Submit</button>
     <div id="result"></div>
-    
+    <a href="/about">How This Works</a>
+    <a href="https://github.com/Noah-R/Mulligan-Decider">Source Code</a>
     <script>
 cards = JSON.parse('{{ cardnames }}'.replaceAll("&#34;", "\"").replaceAll("&#39;", "\'"));
 hand=[]
