@@ -9,3 +9,6 @@ body{
     width: 90%;
     text-align: center;
 }
+#result{
+    white-space: pre-line;
+}

@@ -93,8 +93,19 @@ def getMulliganWinRates(d):#configured for neural preprocessed data
         draw = draw[draw["cards"]<float(cards)/7.0]
     return rates
 
-def describe(path):
-    pd.read_csv(path, header=0).describe().to_csv("describe.csv")
+def describe(df):
+    df.describe().to_csv("describe.csv")
+
+def generateAuxiliaryFiles(df, jsonfile):
+    f = open("mulliganWinRates.txt", "w")
+    f.write(str(getMulliganWinRates(df)))
+    f.close()
+    f = open("keys.txt", "w")
+    f.write(str(list(df)))
+    f.close()
+    f = open("cardnames.txt", "w")
+    f.write(str(getAllCardNames(readSet(jsonfile))).replace("\', \'", "\", \"").replace("\', \"", "\", \"").replace("\", \'", "\", \"").replace("[\'", "[\"").replace("\']", "\"]"))#I should probably be writing and reading these things as JSON objects or something of the sort, but this works now and making it better isn't a major priority
+    f.close()
 
 def logisticPreprocess(filename):
     #read in data
@@ -148,10 +159,13 @@ def logisticPreprocess(filename):
 
 def neuralPreprocess(filename):
     #read in data
-    d = pd.read_csv(filename, header=0, usecols=range(0, 359), index_col=False)
+    d = pd.read_csv(filename, header=0, usecols=range(0, 290), index_col=False)
+    
+    #describe
+    describe(d)
 
     #drop extraneous columns
-    dropcols=["user_win_rate_bucket", "user_n_games_bucket", "draft_id", "build_index", "draft_time", "expansion", "event_type", "game_number", "opp_colors", "num_turns", "opp_num_mulligans", "rank", "opp_rank"]
+    dropcols=["user_win_rate_bucket", "user_n_games_bucket", "draft_id", "build_index", "draft_time", "expansion", "event_type", "game_number", "opp_colors", "num_turns", "opp_num_mulligans", "rank", "opp_rank", "main_colors", "splash_colors"]
     d = d.drop(dropcols, axis=1)
 
     #convert num_mulligans to total cards

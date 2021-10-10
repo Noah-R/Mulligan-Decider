@@ -16,8 +16,8 @@ def predictExample(example, model, keys, mulliganWinRates=None):
         pred = model.predict(x=features, verbose=0)[0][0]
         mwr = mulliganWinRates[int(example[0]-1)][int(example[1])]
         result = getSuggestion(pred, mwr)
-        result += "\nProbability of winning with this hand: "+str(pred)
-        result += "\nProbability of winning after mulliganing: "+str(mwr)
+        result += "\nProbability of winning with this hand: "+str(pred*100)+"%"
+        result += "\nProbability of winning after mulliganing: "+str(mwr*100)+"%"
         return result
     
     elif(len(example)>example[0]+2):#this could also do what the above does, but it's a little slower
@@ -46,9 +46,9 @@ def predictExample(example, model, keys, mulliganWinRates=None):
         pred = preds[bestIndex][0]
         mwr = mulliganWinRates[int(example[0]-1)][int(example[1])]
         result = getSuggestion(pred, mwr)
-        result += "\nBest combination of cards"+str(bestHand)#This line technically returns some user input, it'd be tricky to inject through, but it should be escaped before sending to user
-        result += "\nProbability of winning with this hand: "+str(pred)
-        result += "\nProbability of winning after mulliganing: "+str(mwr)
+        result += "\nBest combination of cards: "+(", ".join(bestHand))#This line technically returns some user input, it'd be tricky to inject through, but it should be escaped before sending to user
+        result += "\nProbability of winning with this hand: "+str(pred*100)+"%"
+        result += "\nProbability of winning after mulliganing: "+str(mwr*100)+"%"
         return result
     
     else:

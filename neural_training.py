@@ -1,14 +1,17 @@
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-from preprocessing import neuralPreprocess, trainTestSplit, getMulliganWinRates
+from preprocessing import neuralPreprocess, trainTestSplit, getMulliganWinRates, generateAuxiliaryFiles
+from os.path import exists
 
-#As of 30_sep_2021_2, the same training and test set are used for each iteration
-#trainingdata, testdata = trainTestSplit(neuralPreprocess("game_data_public.STX.PremierDraft.csv"), .1)
-#trainingdata.to_csv("training_data.csv", index=False)
-#testdata.to_csv("test_data.csv", index=False)
-trainingdata = pd.read_csv("training_data.csv", header=0)
-testdata = pd.read_csv("test_data.csv", header=0)
+if(not exists("training_data.csv") or not exists("test_data.csv")):
+    trainingdata, testdata = trainTestSplit(neuralPreprocess("game_data_public.MID.PremierDraft.csv"), .1)
+    generateAuxiliaryFiles(trainingdata, "MID.json")
+    trainingdata.to_csv("training_data.csv", index=False)
+    testdata.to_csv("test_data.csv", index=False)
+else:
+    trainingdata = pd.read_csv("training_data.csv", header=0)
+    testdata = pd.read_csv("test_data.csv", header=0)
 
 
 target="won"
@@ -19,7 +22,7 @@ l2rate=.00015
 dropoutrate=0.1
 earlyStoppingPatience=10
 layersize=128
-date="08_oct_2021_1"
+date="10_oct_2021_1"
 
 features=[]
 
