@@ -55,11 +55,9 @@ def predictExample(example, model, keys, mulliganWinRates=None):
         print("Something went seriously wrong here, the hand is missing some cards")
 
 def getSuggestion(pred, mwr):
-    if(pred>mwr*1.75):
-        return "Snap keep"
-    if(pred<mwr/1.75):
-        return "Snap mulligan"
     if(pred>mwr*1.15):
+        if(pred>.7):
+            return "Snap keep"
         return "Keep"
     if(pred<mwr/1.15):
         return "Mulligan"

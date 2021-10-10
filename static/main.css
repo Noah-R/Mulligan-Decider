@@ -2,3 +2,10 @@ html{
     background-color: black;
     color: white;
 }
+body{
+    position: relative;
+    top: 10px;
+    margin: auto;
+    width: 90%;
+    text-align: center;
+}

@@ -10,13 +10,14 @@
 </head>
 <body>
     <input type="text" placeholder="Enter card name" id="myInput" onkeyup="filterFunction()">
-    <div id="myDropdown" class="dropdown-content">
+    <div id="dropdown" class="dropdown-content">
     </div>
     <div id="roster">
     </div>
-    <input type="checkbox" id="onplay">
     <label for="checkbox">On Play?</label>
-    <p>Cards:</p>
+    <input type="checkbox" id="onplay">
+    <br/>
+    <label>Cards:</label>
     <input type="radio" id="7cards" name="cards" value="7" checked>
     <label for="huey">7</label>
     <input type="radio" id="6cards" name="cards" value="6">
@@ -31,7 +32,7 @@
     <label for="huey">2</label>
     <input type="radio" id="1cards" name="cards" value="1">
     <label for="huey">1</label>
-      
+    <br/>
     <button onclick="submit()">Submit</button>
     <div id="result"></div>
     <a href="/about">How This Works</a>
@@ -59,10 +60,10 @@ function addCard(e){
 function filterFunction() {
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
-    document.getElementById("myDropdown").innerHTML=""
+    document.getElementById("dropdown").innerHTML=""
     for(var x=0; x<cards.length; x++){
         if (cards[x].toUpperCase().indexOf(filter) == 0) {
-            document.getElementById("myDropdown").innerHTML+="<button onclick=addCard(this)>"+cards[x]+"</button>\n";
+            document.getElementById("dropdown").innerHTML+="<button onclick=addCard(this)>"+cards[x]+"</button>\n";
         }
     }
 }
