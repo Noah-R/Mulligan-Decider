@@ -10,6 +10,10 @@ Data and license are available at https://www.17lands.com/public_datasets
 
 Some functions also use MTGJSON set files, which are available at https://mtgjson.com/downloads/all-sets/
 
+## Deployment todos
+    pare down requirements.txt
+    convert all code to tensorflow-cpu
+
 ## Room for expansion
     Create a neural network to predict mulligan win rates
         Train on examples of games where the player mulliganed, using only play/draw, hand size, and seven random cards from the deck_* columns
