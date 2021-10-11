@@ -2,8 +2,8 @@ from flask import Flask, render_template, request
 from prediction import setup, predictExample
 from markupsafe import escape
 
-cardnames = open("cardnames.txt", "r").read()#no-model verson
-#model, keys, cardnames, mulliganWinRates = setup("model_10_oct_2021_1", "keys.txt", "cardnames.txt", "mulliganWinRates.txt")
+#cardnames = open("cardnames.txt", "r").read()#empty verson
+model, keys, cardnames, mulliganWinRates = setup("model_10_oct_2021_1", "keys.txt", "cardnames.txt", "mulliganWinRates.txt")
 app = Flask(__name__)
 
 @app.route("/", methods=['GET'])
