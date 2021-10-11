@@ -21,8 +21,8 @@ epochs=100
 l2rate=.00015
 dropoutrate=0.1
 earlyStoppingPatience=10
-layersize=128
-date="10_oct_2021_1"
+layersize=96#128
+date="11_oct_2021_1"
 
 features=[]
 

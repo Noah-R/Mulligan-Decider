@@ -35,9 +35,7 @@ def getWeights(model):#Only works for the logistic regression model, with featur
         print(str(cols[index]["config"]["key"])+": "+str(weights[index]))
     print("Bias: "+str(bias))
 
-#07_oct_2021_4: .2385 mse, .5883048224877504 accuracy, w/l2 .0001
-#07_oct_2021_6: .2388 mse, .588885068340067 accuracy
-model = tf.keras.models.load_model('model_10_oct_2021_1')
+model = tf.keras.models.load_model('model_11_oct_2021_1')
 data = pd.read_csv("test_data.csv", header=0)
 
 features = {name: np.array(value) for name, value in data.items()}
