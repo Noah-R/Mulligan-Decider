@@ -2,6 +2,11 @@ from flask import Flask, render_template, request
 from prediction import setup, predictExample
 from markupsafe import escape
 
+import resource
+
+softlimit, hardlimit = resource.getrlimit(resource.RLIMIT_AS)
+resource.setrlimit(resource.RLIMIT_AS, (402653184, hardlimit))
+
 #cardnames = open("cardnames.txt", "r").read()#empty verson
 model, keys, cardnames, mulliganWinRates = setup("model_10_oct_2021_1", "keys.txt", "cardnames.txt", "mulliganWinRates.txt")
 app = Flask(__name__)
