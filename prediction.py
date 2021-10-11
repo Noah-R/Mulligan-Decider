@@ -78,9 +78,10 @@ def enterExample():
         hand.append(input("Enter card name"))
     return hand
 
-def setup(model, keys, cardnames, mwr):#can write this out to generate these files if they don't yet exist
+def setup(model, keys, cardnames, mwr):
+    #tf.config.set_logical_device_configuration(tf.config.list_physical_devices('CPU')[0], [tf.config.LogicalDeviceConfiguration(memory_limit=250)])#on that blessed day, when tensorflow supports memory_limit for cpu, this will solve all my problems
     model = tf.keras.models.load_model(model)
-    keys = eval(open(keys, "r").read())#open(keys, "r").read().strip('][').strip('\"').split('\", \"')
+    keys = eval(open(keys, "r").read())
     cardnames = open(cardnames, "r").read()
     mulliganWinRates = eval(open(mwr, "r").read())
     return model, keys, cardnames, mulliganWinRates

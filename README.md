@@ -10,7 +10,7 @@ Data and license are available at https://www.17lands.com/public_datasets
 
 Some functions also use MTGJSON set files, which are available at https://mtgjson.com/downloads/all-sets/
 
-This is theoretically deployable, but it uses a lot of memory, more than Heroku will give me for free. I'm looking into whether I can save meomry by changing some TensorFlow settings, if not then this will need a more expensive web server. Also, requirements.txt also has a bunch of extraneous stuff. None of it is very big but it should be pared down.
+This is theoretically deployable, but it uses a lot of memory, more than Heroku will give me for free. TensorFlow won't let you set a memory limit for CPU, so I'm not sure how to deploy this without paying for a bunch of RAM that I shouldn't need. Also, requirements.txt also has a bunch of extraneous stuff. None of it is very big but it should be pared down.
 
 ## Room for expansion
     Create a neural network to predict mulligan win rates
