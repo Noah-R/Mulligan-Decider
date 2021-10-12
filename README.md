@@ -10,7 +10,7 @@ Data and license are available at https://www.17lands.com/public_datasets
 
 Some functions also use MTGJSON set files, which are available at https://mtgjson.com/downloads/all-sets/
 
-This is theoretically deployable, but it uses a lot of memory, more than Heroku will give me for free. TensorFlow won't let you set a memory limit for CPU, so I'm not sure how to deploy this without paying for a bunch of RAM that I shouldn't need. Also, requirements.txt also has a bunch of extraneous stuff. None of it is very big but it should be pared down.
+This project is basically complete, but I'm not sure how to deploy it, because TensorFlow won't let me set a memory limit for CPU, so it tries to eat all of the cloud host's RAM and the host kills it. It works great on localhost though, download it and do `flask run` at the base directory if you want to try it.
 
 ## Room for expansion
     Create a neural network to predict mulligan win rates
