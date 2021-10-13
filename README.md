@@ -1,9 +1,6 @@
-# Temporary stuff for me
+# Docker command to initialize Tensorflow Serving
 
 docker run -p 8501:8501 --name tfs --mount type=bind,source=C:/Users/noahr/Desktop/Mulligan-Decider/currentModel,target=/models/model -t tensorflow/serving
-
-On-board preprocess lists in dicts to tensors/numpy arrays
-Configure for Heroku configuration
 
 # Mulligan-Decider
 
