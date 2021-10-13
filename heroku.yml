@@ -1,4 +1,0 @@
-build:
-  docker:
-    web: webapp/Dockerfile
-    worker: serving/Dockerfile
