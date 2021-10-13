@@ -8,7 +8,7 @@ from markupsafe import escape
 #resource.setrlimit(resource.RLIMIT_AS, (536870912, hardlimit))
 
 #cardnames = open("cardnames.txt", "r").read()#empty verson
-model, keys, cardnames, mulliganWinRates = setup("keys.txt", "cardnames.txt", "mulliganWinRates.txt")
+keys, cardnames, mulliganWinRates = setup("keys.txt", "cardnames.txt", "mulliganWinRates.txt")
 app = Flask(__name__)
 
 @app.route("/", methods=['GET'])
