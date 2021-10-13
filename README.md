@@ -1,3 +1,10 @@
+# Temporary stuff for me
+
+docker run -p 8501:8501 --name tfs --mount type=bind,source=C:/Users/noahr/Desktop/Mulligan-Decider/currentModel,target=/models/model -t tensorflow/serving
+
+On-board preprocess lists in dicts to tensors/numpy arrays
+Configure for Heroku configuration
+
 # Mulligan-Decider
 
 This is a machine learning model for Magic: the Gathering, which decides whether a player should keep or mulligan an opening hand in a limited game. The model predicts the probability of winning if the player keeps the hand, using a neural network which trains on 17lands game data. It compares this probability to the average win rate after mulliganing, and advises the user to pick the option with the higher chance of winning.

@@ -8,7 +8,7 @@ from markupsafe import escape
 #resource.setrlimit(resource.RLIMIT_AS, (536870912, hardlimit))
 
 #cardnames = open("cardnames.txt", "r").read()#empty verson
-model, keys, cardnames, mulliganWinRates = setup("model_11_oct_2021_2", "keys.txt", "cardnames.txt", "mulliganWinRates.txt")
+model, keys, cardnames, mulliganWinRates = setup("keys.txt", "cardnames.txt", "mulliganWinRates.txt")
 app = Flask(__name__)
 
 @app.route("/", methods=['GET'])
@@ -19,8 +19,7 @@ def main_page():
 def predict():
     req = request.get_json()
     example = [float(req["cards"]), float(req["onplay"])] + str(req["hand"]).replace(", ", " ").split(",")
-    result = predictExample(example, model, keys, mulliganWinRates)
-    print(result)
+    result = predictExample(example, keys, mulliganWinRates)
     return escape(result)
 
 
