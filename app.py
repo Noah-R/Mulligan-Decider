@@ -2,12 +2,6 @@ from flask import Flask, render_template, request
 from prediction import setup, predictExample
 from markupsafe import escape
 
-#these three lines only work on unix
-#import resource
-#softlimit, hardlimit = resource.getrlimit(resource.RLIMIT_AS)
-#resource.setrlimit(resource.RLIMIT_AS, (536870912, hardlimit))
-
-#cardnames = open("cardnames.txt", "r").read()#empty verson
 keys, cardnames, mulliganWinRates = setup("keys.txt", "cardnames.txt", "mulliganWinRates.txt")
 app = Flask(__name__)
 
