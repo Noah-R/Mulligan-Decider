@@ -1,7 +1,3 @@
-# Docker command to initialize Tensorflow Serving
-
-docker run -p 8501:8501 --name tfs --mount type=bind,source=C:/Users/noahr/Desktop/Mulligan-Decider/currentModel,target=/models/model -t tensorflow/serving
-
 # Mulligan-Decider
 
 This is a machine learning model for Magic: the Gathering, which decides whether a player should keep or mulligan an opening hand in a limited game. The model predicts the probability of winning if the player keeps the hand, using a neural network which trains on 17lands game data. It compares this probability to the average win rate after mulliganing, and advises the user to pick the option with the higher chance of winning.
@@ -14,7 +10,13 @@ Data and license are available at https://www.17lands.com/public_datasets
 
 Some functions also use MTGJSON set files, which are available at https://mtgjson.com/downloads/all-sets/
 
-This project is basically complete, but I'm not sure how to deploy it, because TensorFlow won't let me set a memory limit for CPU, so it tries to eat all of the cloud host's RAM and the host kills it. It works great on localhost though, for now if you want to try it, download and unpack the zip, navigate to it from command prompt, `pip install -r requirements.txt`, `flask run`, and connect to `localhost:5000`.
+Currently configured for Heroku deployment. To run on localhost:
+    webapp:
+        Change url in `prediciton.py`
+        `pip install -r requirements.txt`
+        `flask run`
+    serving:
+        docker run -p 8501:8501 --name tfs --mount type=bind,source=currentModel,target=/models/model -t tensorflow/serving
 
 ## Room for expansion
     Create a neural network to predict mulligan win rates

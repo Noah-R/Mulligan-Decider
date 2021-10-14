@@ -85,11 +85,14 @@ def enterExample():
         hand.append(input("Enter card name"))
     return hand
 
-def sendPrediction(features, url="http://localhost:8501/v1/models/model:predict"):
+def sendPrediction(features, url="http://rcnrcn927.herokuapp.com/v1/models/model:predict"):#change rcnrcn927.herokuapp.com to localhost:8501 to run on localhost
     data = json.dumps({"signature_name": "serving_default", "inputs": features})
+    print("Sending: "+str(data))
     headers = {"content-type": "application/json"}
     response = requests.post(url, data=data, headers=headers)
-    return json.loads(response.text)['outputs']
+    result = json.loads(response.text)
+    print("Got back from tfs:" +str(result))
+    return result['outputs']
 
 def setup(keys, cardnames, mwr):
     keys = eval(open(keys, "r").read())
