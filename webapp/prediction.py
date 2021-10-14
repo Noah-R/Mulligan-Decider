@@ -56,8 +56,8 @@ def argmax(preds):
     argmax = 0
     best = -1
     for i in range(len(preds)):
-        if(preds[i]>best):
-            best=preds[i]
+        if(preds[i][0]>best):
+            best=preds[i][0]
             argmax=i
     return argmax
 
@@ -85,13 +85,12 @@ def enterExample():
         hand.append(input("Enter card name"))
     return hand
 
-def sendPrediction(features, url="http://rcnrcn927.herokuapp.com/v1/models/model:predict"):#change rcnrcn927.herokuapp.com to localhost:8501 to run on localhost
+def sendPrediction(features, url="http://rcnrcn927.herokuapp.com/v1/models/model:predict"):
+    #url="http://localhost:8501/v1/models/model:predict"#uncomment to run on localhost
     data = json.dumps({"signature_name": "serving_default", "inputs": features})
-    print("Sending: "+str(data))
     headers = {"content-type": "application/json"}
     response = requests.post(url, data=data, headers=headers)
     result = json.loads(response.text)
-    print("Got back from tfs:" +str(result))
     return result['outputs']
 
 def setup(keys, cardnames, mwr):

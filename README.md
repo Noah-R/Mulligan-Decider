@@ -10,13 +10,14 @@ Data and license are available at https://www.17lands.com/public_datasets
 
 Some functions also use MTGJSON set files, which are available at https://mtgjson.com/downloads/all-sets/
 
-Currently configured for Heroku deployment. To run on localhost:
+Currently configured for Heroku deployment, but requests to serving are timing out. To run on localhost:
     webapp:
-        Change url in `prediciton.py`
+        Uncomment localhost url in `prediciton.py`
         `pip install -r requirements.txt`
         `flask run`
     serving:
-        docker run -p 8501:8501 --name tfs --mount type=bind,source=currentModel,target=/models/model -t tensorflow/serving
+        `docker pull tensorflow/serving`
+        `docker run -p 8501:8501 --name tfs --mount type=bind,source=C:\Users\noahr\Desktop\Mulligan-Decider\serving\currentModel,target=/models/model -t tensorflow/serving`(Replace my absolute path to currentModel with yours)
 
 ## Room for expansion
     Create a neural network to predict mulligan win rates
