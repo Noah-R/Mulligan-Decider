@@ -12,7 +12,6 @@ Some functions also use MTGJSON set files, which are available at https://mtgjso
 
 Currently configured for Heroku deployment, but requests to serving are timing out. To run on localhost:
     webapp:
-        Uncomment localhost url in `prediciton.py`
         `pip install -r requirements.txt`
         `flask run`
     serving:

@@ -86,7 +86,7 @@ def enterExample():
     return hand
 
 def sendPrediction(features, url="http://rcnrcn927.herokuapp.com/v1/models/model:predict"):
-    #url="http://localhost:8501/v1/models/model:predict"#uncomment to run on localhost
+    url="http://localhost:8501/v1/models/model:predict"#comment to deploy to heroku
     data = json.dumps({"signature_name": "serving_default", "inputs": features})
     headers = {"content-type": "application/json"}
     response = requests.post(url, data=data, headers=headers)
